@@ -19,21 +19,6 @@ console.disableYellowBox = true;
 const { width } = Dimensions.get('window');
 const RouterWithRedux = connect()(Router);
 
-const MyToast = (props) => {
-  console.log(props);
-  return (
-    <Toast
-       visible
-       position={0}
-       shadow
-       animation
-       hideOnPress={false}
-    >
-       ilyas
-     </Toast>
-  );
-};
-
 class Routes extends Component {
 
   constructor(props) {
