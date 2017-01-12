@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, NetInfo } from 'react-native';
+import { View, NetInfo, Platform, ToastAndroid } from 'react-native';
 import Toast from 'react-native-root-toast';
 import I18n from './config/lang/i18.js';
 
@@ -26,18 +26,23 @@ class App extends Component {
   renderApp() {
     if (this.state.isConnected) {
       return false;
+    } else if (Platform.OS === 'ios') {
+      return (
+        <Toast
+           visible
+           position={0}
+           shadow
+           animation
+           hideOnPress={false}
+        >
+           {I18n.t('connectionError')}
+         </Toast>
+      );
+    } else {
+      return (
+        ToastAndroid.showWithGravity(I18n.t('connectionError'), ToastAndroid.SHORT, ToastAndroid.CENTER)
+      );
     }
-    return (
-      <Toast
-         visible
-         position={0}
-         shadow
-         animation
-         hideOnPress={false}
-      >
-         {I18n.t('connectionError')}
-       </Toast>
-    );
   }
 
   render() {
