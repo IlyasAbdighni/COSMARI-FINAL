@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 
-class DateLoc extends Component {
-  render() {
+const DateLoc = props => {
+  console.log(props);
     return (
       <View>
         <Text>DateLoc</Text>
       </View>
     );
-  }
-}
+};
+
 export default DateLoc;
