@@ -25,7 +25,11 @@ class Routes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isConnected: true, isLoading: true };
+    this.state = {
+      isConnected: true,
+      isLoading: true,
+      cities: null
+    };
   }
 
   componentWillMount() {
@@ -124,7 +128,7 @@ class Routes extends Component {
         <RouterWithRedux
           renderLeftButton={navBarLeftBtn}
           renderRightButton={navBarRightBtn}
-          navigationBarStyle={{backgroundColor: Theme.navBarBGColor}}
+          navigationBarStyle={{ backgroundColor: Theme.navBarBGColor, borderBottomWidth: 0 }}
         >
 
             <Scene key="root">
@@ -142,6 +146,7 @@ class Routes extends Component {
                     component={Info}
                     title=""
                     sceneStyle={styles.sceneStyle}
+                    propertyFromParent='hello redux'
                   />
                 </Scene>
 
@@ -211,7 +216,7 @@ const styles = StyleSheet.create({
   },
   sceneStyle: {
     paddingTop: Platform.OS === 'ios' ? 61 : 50,
-    backgroundColor: '#fafafa'
+    backgroundColor: '#fafafa',
   }
 
 });
