@@ -24,7 +24,6 @@ class App extends Component {
   }
 
   renderApp() {
-    console.log('ilyas is clever');
     if (this.state.isConnected) {
       return false;
     }
@@ -42,7 +41,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View style={{ flex: 1 }}>
         {this.renderApp()}
