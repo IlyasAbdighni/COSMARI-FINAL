@@ -1,3 +1,8 @@
 export default (state = {}, action) => {
-  return {};
+  switch (action.type) {
+    case 'app_opening_done':
+      return { ...state, cityName: action.payload };
+    default:
+      return state;
+  }
 };
