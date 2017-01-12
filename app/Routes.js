@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, NetInfo } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, NetInfo, Platform } from 'react-native';
 import { Provider, connect } from 'react-redux';
-import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-root-toast';
@@ -12,6 +12,7 @@ import News from './routes/news';
 import Collect from './routes/collect';
 import Photo from './routes/photo';
 import MyCityList from './routes/myCityList';
+import AllCity from './routes/cityList';
 import Theme from './styles';
 import I18n from './config/lang/i18.js';
 
@@ -98,14 +99,14 @@ class Routes extends Component {
     const navBarLeftBtn = () => {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
-          <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18 }}>{I18n.t('header.buttonText')}</Text>
-          <Ionicons style={{ marginLeft: 7, textAlign: 'center' }} color='rgba(0, 0, 0, 0.87)' name="md-arrow-dropdown" size={30} />
+          <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+          <Ionicons style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='rgba(0, 0, 0, 0.87)' name="md-arrow-dropdown" size={30} />
         </TouchableOpacity>);
     };
 
     const navBarRightBtn = () => (
       <View>
-        <Ionicons name="md-search" size={26} color='rgba(0, 0, 0, 0.87)' />
+        <Ionicons style={{ marginBottom: 5 }} name="md-search" size={26} color='rgba(0, 0, 0, 0.87)' />
       </View>
     );
 
@@ -116,63 +117,75 @@ class Routes extends Component {
           renderRightButton={navBarRightBtn}
           navigationBarStyle={{backgroundColor: Theme.navBarBGColor}}
         >
-          <Scene key="root">
-            {/* Tab Container */}
-            <Scene
-              key="tabbar"
-              tabs
-              tabBarStyle={{ backgroundColor: Theme.barBarBGColor }}
-              pressOpacity={1}
-            >
-              {/* Tab and it's scenes */}
-              <Scene key="Info" title="Info" icon={this.renderIcons} >
-                <Scene
-                  key="InfoMain"
-                  component={Info}
-                  title=""
-                  sceneStyle={{ paddingTop: 50 }}
-                />
+
+            <Scene key="root">
+              {/* Tab Container */}
+              <Scene
+                key="tabbar"
+                tabs
+                tabBarStyle={{ backgroundColor: Theme.tabBarBGColor }}
+                pressOpacity={0.7}
+              >
+                {/* Tab and it's scenes */}
+                <Scene key="Info" title="Info" icon={this.renderIcons} >
+                  <Scene
+                    key="InfoMain"
+                    component={Info}
+                    title=""
+                    sceneStyle={styles.sceneStyle}
+                  />
+                </Scene>
+
+                {/* Tab and it's scenes */}
+                <Scene key="News" title="News" icon={this.renderIcons}>
+                  <Scene
+                    key="NewsMain"
+                    component={News}
+                    title=""
+                    sceneStyle={styles.sceneStyle}
+                  />
+                </Scene>
+
+                {/* Tab and it's scenes */}
+                <Scene key="Collect" title="Collect" icon={this.renderIcons}>
+                  <Scene
+                    key="CollectMain"
+                    component={Collect}
+                    title=""
+                    sceneStyle={styles.sceneStyle}
+                  />
+                </Scene>
+
+                {/* Tab and it's scenes */}
+                <Scene key="Photo" title="Photo" icon={this.renderIcons}>
+                  <Scene
+                    key="PhotoMain"
+                    component={Photo}
+                    title=""
+                    sceneStyle={styles.sceneStyle}
+                  />
+                </Scene>
               </Scene>
 
-              {/* Tab and it's scenes */}
-              <Scene key="News" title="News" icon={this.renderIcons}>
-                <Scene
-                  key="NewsMain"
-                  component={News}
-                  title=""
-                  sceneStyle={{ paddingTop: 50 }}
-                />
-              </Scene>
+              <Scene
+                key='MyCity'
+                component={MyCityList}
+                leftButtonIconStyle={{ tintColor: '#000' }}
+                renderRightButton={null}
+                title={I18n.t('sceneTitle.myCityList')}
+                sceneStyle={styles.sceneStyle}
+              />
 
-              {/* Tab and it's scenes */}
-              <Scene key="Collect" title="Collect" icon={this.renderIcons}>
-                <Scene
-                  key="CollectMain"
-                  component={Collect}
-                  title=""
-                  sceneStyle={{ paddingTop: 50 }}
-                />
-              </Scene>
+              <Scene
+                key='AllCity'
+                component={AllCity}
+                leftButtonIconStyle={{ tintColor: '#000' }}
+                title={I18n.t('sceneTitle.cityList')}
+                sceneStyle={styles.sceneStyle}
+              />
 
-              {/* Tab and it's scenes */}
-              <Scene key="Photo" title="Photo" icon={this.renderIcons}>
-                <Scene
-                  key="PhotoMain"
-                  component={Photo}
-                  title=""
-                  sceneStyle={{ paddingTop: 50 }}
-                />
-              </Scene>
             </Scene>
-            <Scene
-              key='MyCity'
-              renderRightButton={null}
-              component={MyCityList}
-              leftButtonIconStyle={{ tintColor: '#000' }}
-              title={I18n.t('sceneTitle.myCityList')}
-              sceneStyle={{ paddingTop: 50 }}
-            />
-          </Scene>
+
         </RouterWithRedux>
       </Provider>
     );
@@ -185,6 +198,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.8,
     justifyContent: 'flex-start'
+  },
+  sceneStyle: {
+    paddingTop: Platform.OS === 'ios' ? 61 : 50,
+    backgroundColor: '#fafafa'
   }
 
 });
