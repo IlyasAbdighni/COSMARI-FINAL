@@ -24,7 +24,7 @@ class Routes extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isConnected: true};
+    this.state = { isConnected: true, isLoading: true };
   }
 
   componentDidMount() {
@@ -36,7 +36,7 @@ class Routes extends Component {
     });
   }
 
-  store = Store()
+  store = Store(() => this.setState({ isLoading: false }))
 
   openMyCityList() {
 
@@ -96,6 +96,7 @@ class Routes extends Component {
   }
 
   render() {
+    console.log(this.state);
     const navBarLeftBtn = () => {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
@@ -174,6 +175,7 @@ class Routes extends Component {
                 renderRightButton={null}
                 title={I18n.t('sceneTitle.myCityList')}
                 sceneStyle={styles.sceneStyle}
+                direction='vertical'
               />
 
               <Scene
