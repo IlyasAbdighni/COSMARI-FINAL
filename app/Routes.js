@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, NetInfo, Platform } from 'react-native';
 import { Provider, connect } from 'react-redux';
@@ -25,6 +26,14 @@ class Routes extends Component {
   constructor(props) {
     super(props);
     this.state = { isConnected: true, isLoading: true };
+  }
+
+  componentWillMount() {
+    axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=81')
+          .then(res =>
+              this.store.dispatch({ type: 'app_opening_done', payload: res.data })
+          )
+          .catch(error => this.store.dispatch({ type: 'error', payload: error }));
   }
 
   componentDidMount() {
@@ -96,7 +105,6 @@ class Routes extends Component {
   }
 
   render() {
-    console.log(this.state);
     const navBarLeftBtn = () => {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
