@@ -29,7 +29,7 @@ class DateLoc extends Component {
   }
 
   renderScrollView() {
-    if (this.props.city.hasOwnProperty('Date')) {
+    if (this.props.city !== null && this.props.city.hasOwnProperty('Date')) {
       return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {this.renderItems()}
@@ -44,7 +44,6 @@ class DateLoc extends Component {
   }
 
   renderItems() {
-    console.log(this.props.city.Date);
     const {
       imageStyle,
       imageNameStyle,
@@ -73,8 +72,14 @@ class DateLoc extends Component {
     );
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props === nextProps) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    console.log(this.props);
     const {
       scrollViewContainer,
       textTitleContaner,
@@ -85,14 +90,6 @@ class DateLoc extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Card>
-          <CardSection style={scrollViewContainer}>
-            <View style={textTitleContaner}>
-              <Text style={textTitle}>{I18n.t('info.leftTab.modeOftransfer')}</Text>
-            </View>
-            <View style={scrollViewContent}>
-              {this.renderScrollView()}
-            </View>
-          </CardSection>
           <CardSection style={scrollViewContainer}>
             <View style={textTitleContaner}>
               <Text style={textTitle}>{I18n.t('info.leftTab.modeOftransfer')}</Text>

@@ -48,4 +48,4 @@ const styles = {
     color: '#5067FF'
   }
 };
-export default MyParsedText;
+export { MyParsedText };
