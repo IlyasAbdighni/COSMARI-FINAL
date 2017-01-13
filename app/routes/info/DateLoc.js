@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import MapView from 'react-native-maps';
 
 import { Card, CardSection, Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
 
-const {height} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
 
 class DateLoc extends Component {
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props === nextProps) {
+      return false;
+    }
+    return true;
+  }
 
   renderDate(d) {
     const day = new Date(d);
@@ -26,6 +34,12 @@ class DateLoc extends Component {
         return `${week[weekNum]} ${monthNum}`;
       }
     }
+  }
+
+  goToNativeMapApp() {
+    const latitude = this.props.city.Comune.CentriRaccolta[0].Latitudine;
+    const longitude = this.props.city.Comune.CentriRaccolta[0].Longitudine;
+    Linking.openURL(`http://maps.apple.com/?daddr=${latitude},${longitude}`);
   }
 
   renderScrollView() {
@@ -72,11 +86,64 @@ class DateLoc extends Component {
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props === nextProps) {
-      return false;
+  renderMapCallout(title, description) {
+    return (
+      <TouchableOpacity
+        onPress={this.goToNativeMapApp.bind(this)}
+      >
+        <View>
+          <Text style={styles.mapCalloutTitle}>{title}</Text>
+        </View>
+        <View>
+          <Text style={{ fontSize: 12 }}>{description}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  renderMapView() {
+    if (this.props.city !== null && this.props.city.hasOwnProperty('Comune')) {
+      const title = this.props.city.Comune.CentriRaccolta[0].IndirizzoCentroDiRaccolta;
+      const description = this.props.city.Comune.CentriRaccolta[0].Orario;
+
+      return (
+        <MapView
+          style={styles.mapStyle}
+          region={{
+            latitude: this.props.city.Comune.CentriRaccolta[0].Latitudine,
+            longitude: this.props.city.Comune.CentriRaccolta[0].Longitudine,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.003,
+          }}
+          onCalloutPress={this.goToNativeMapApp}
+        >
+          <MapView.Marker
+          coordinate={{
+            latitude: this.props.city.Comune.CentriRaccolta[0].Latitudine,
+            longitude: this.props.city.Comune.CentriRaccolta[0].Longitudine
+            // latitude: 37.78825,
+            // longitude: -122.4324,
+          }}
+          title={title}
+          description={description}
+          onCalloutPress={this.goToNativeMapApp}
+          onPress={this.goToNativeMapApp}
+          >
+            <MapView.Callout
+              style={{ width: width * 0.6 }}
+            >
+              {this.renderMapCallout(title, description)}
+            </MapView.Callout>
+          </MapView.Marker>
+        </MapView>
+
+      );
     }
-    return true;
+    return (
+      <View style={[styles.spinnerContainer, {flex: 1, justifyContent: 'center', alignItems: 'center'}]}>
+        <Spinner color='green' size='large' />
+      </View>
+    );
   }
 
   render() {
@@ -97,6 +164,17 @@ class DateLoc extends Component {
             <View style={scrollViewContent}>
               {this.renderScrollView()}
             </View>
+          </CardSection>
+          <CardSection>
+            <MapView
+              style={styles.mapStyle}
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            />
           </CardSection>
         </Card>
       </View>
@@ -143,7 +221,8 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     flex: 1,
-    height: height / 3.5
+    height: height / 3.5,
+    width: 300
   },
   mapCalloutTitle: {
     textAlign: 'center',
