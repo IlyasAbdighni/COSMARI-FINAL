@@ -7,7 +7,12 @@ import AboutCity from './AboutCity';
 import I18n from '../../config/lang/i18';
 
 const Info = (props) => {
-  console.log(props);
+  let city = null;
+  let dates = null;
+  if (typeof props.city !== 'undefined') {
+    city = props.city.Comune;
+    dates = props.city.Date;
+  }
   return (
       <ScrollableTabView
         tabBarBackgroundColor='#4CAF50'
@@ -17,8 +22,8 @@ const Info = (props) => {
         tabBarUnderlineStyle={{ backgroundColor: '#5067FF' }}
         style={{ borderWidth: 0 }}
       >
-         <DateAndLocation tabLabel={I18n.t('info.leftTab.tabTitle')} />
-         <AboutCity tabLabel={I18n.t('info.rightTab.tabTitle')} />
+         <DateAndLocation city={props.city} tabLabel={I18n.t('info.leftTab.tabTitle')} />
+         <AboutCity dates={dates} tabLabel={I18n.t('info.rightTab.tabTitle')} />
       </ScrollableTabView>
   );
 };

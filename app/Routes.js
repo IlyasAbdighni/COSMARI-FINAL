@@ -188,7 +188,6 @@ class Routes extends Component {
                 renderRightButton={null}
                 title={I18n.t('sceneTitle.myCityList')}
                 sceneStyle={styles.sceneStyle}
-                direction='vertical'
               />
 
               <Scene
