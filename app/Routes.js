@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
   },
   sceneStyle: {
     paddingTop: Platform.OS === 'ios' ? 61 : 50,
+    paddingBottom: Platform.OS === 'ios' ? 0 : 50,
     backgroundColor: '#fafafa',
   }
 
