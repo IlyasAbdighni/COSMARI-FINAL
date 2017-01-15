@@ -14,6 +14,7 @@ import Collect from './routes/collect';
 import Photo from './routes/photo';
 import MyCityList from './routes/myCityList';
 import AllCity from './routes/cityList';
+import NewsDetail from './routes/news/NewsDetail';
 import Theme from './styles';
 import I18n from './config/lang/i18.js';
 
@@ -196,6 +197,15 @@ class Routes extends Component {
                 leftButtonIconStyle={{ tintColor: '#000' }}
                 title={I18n.t('sceneTitle.cityList')}
                 sceneStyle={styles.sceneStyle}
+              />
+              <Scene
+                  key='newsDetail'
+                  title='News'
+                  hideNavBar={false}
+                  leftButtonIconStyle={{ tintColor: '#000' }}
+                  navigationBarStyle={{ backgroundColor: '#4CAF50' }}
+                  component={NewsDetail}
+                  sceneStyle={{ paddingTop: 80 }}
               />
 
             </Scene>

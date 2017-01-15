@@ -6,8 +6,7 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-  console.log(action);
-  switch (action.type) {
+  switch (action.key) {
     case ActionConst.FOCUS:
       return {
         ...state,

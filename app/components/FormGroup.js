@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Alert, Linking, LayoutAnimation } from 'react-native';
+import { View, Text, StyleSheet, Alert, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, InputGroup, Input, Icon } from 'native-base';
-import I18n from '../../config/lang/i18';
+import I18n from '../config/lang/i18';
 
 import {
   nameChanged,
@@ -11,7 +11,7 @@ import {
   addressChanged,
   descriptionChanged,
   sendEmailOnlyText
- } from '../../actions';
+} from '../actions/FormActions';
 
 class FormGroup extends Component {
 
