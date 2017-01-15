@@ -20,10 +20,10 @@ export const initailizeTheApp = () => {
 };
 
 export const newsTabPressed = () => {
-  const { id } = getChoosenCommunity();
+  //const { id } = getChoosenCommunity();
   return dispatch => {
     dispatch({ type: NEWS_OPENING });
-    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + id)
+    axios.get('https://cosmari.e-lios.eu/API/News/List?id=81')
          .then(res => dispatch({ type: NEWS_OPENING_DONE, payload: res.data }))
          .catch(error => console.log(error));
   };
@@ -42,7 +42,7 @@ export const infoTabPressed = () => {
 
 export const getCommunityList = () => {
   return dispatch => {
-    Actions.communityList();
+    Actions.AllCity();
     dispatch({ type: COMMUNITY_LIST_OPENING });
     axios.get('https://cosmari.e-lios.eu/API/Comuni/List')
          .then(res => dispatch({ type: COMMUNITY_LIST_DONE, payload: res.data }))

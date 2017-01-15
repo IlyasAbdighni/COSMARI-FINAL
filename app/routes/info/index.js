@@ -37,7 +37,6 @@ class Info extends Component {
     this.setState({
       city: nextProps.city
     });
-    console.log(this.state.city);
   }
 
   _handleChangeTab = (index) => {
@@ -49,7 +48,6 @@ class Info extends Component {
   };
 
   _renderScene = ({ route }) => {
-    console.log(route.key);
     switch (route.key) {
     case '1':
       return <DateAndLocation city={this.state.city} style={[styles.page]} />;
