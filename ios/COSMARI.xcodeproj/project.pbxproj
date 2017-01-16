@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -42,6 +43,7 @@
 		BFFA74B5BA6C40D7A0655A72 /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA9B1277E3441F3BDF857FE /* libRNI18n.a */; };
 		C01D0C392D184DC4B5EED238 /* Courier New.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 52FDE8EC5BF6479D818A8AB6 /* Courier New.ttf */; };
 		C1DD20BA5F364E3CA48FBBA9 /* Microsoft Sans Serif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9565EF7C0514852964DD631 /* Microsoft Sans Serif.ttf */; };
+		CC9358B21A5A443C9CB915D5 /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 533A90AAAD494A22A00BF9BA /* libRNMail.a */; };
 		E91B48FCEABD4362B40FE880 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DB52CF5CFB4F9CB4B216E1 /* libRNVectorIcons.a */; };
 		ECE3570D04FB4AC3B924F1AB /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6A329CCCAB7471F866B8C13 /* MaterialIcons.ttf */; };
 		F03350942CE44A3282ED3A84 /* Comic Sans MS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 23B0D56D1D424FC489C6A50F /* Comic Sans MS.ttf */; };
@@ -112,6 +114,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		281C12831E2CC5BA0027A276 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CE4758A1EE44509896B1620 /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE7F1AFF192F00D3261C;
+			remoteInfo = RNMail;
+		};
+		281C12851E2CC5BA0027A276 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CE4758A1EE44509896B1620 /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE8A1AFF192F00D3261C;
+			remoteInfo = RNMailTests;
 		};
 		2820A6AA1E29271D003BADDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -248,7 +264,9 @@
 		32342886B66C4502AA4A878C /* Skia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Skia.ttf; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; };
 		3436C8893E8C42E8A30E6E5E /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		48CA1B66B6F74390B34392B6 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		4CE4758A1EE44509896B1620 /* RNMail.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNMail.xcodeproj; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; };
 		52FDE8EC5BF6479D818A8AB6 /* Courier New.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Courier New.ttf"; path = "../node_modules/native-base/Fonts/Courier New.ttf"; sourceTree = "<group>"; };
+		533A90AAAD494A22A00BF9BA /* libRNMail.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNMail.a; sourceTree = "<group>"; };
 		61F8600B60884F3C8E946A4E /* Georgia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Georgia.ttf; path = "../node_modules/native-base/Fonts/Georgia.ttf"; sourceTree = "<group>"; };
 		6527776804834ECCA5F45246 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		6B1A5729268D4034AD5D3847 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
@@ -299,6 +317,7 @@
 				BFFA74B5BA6C40D7A0655A72 /* libRNI18n.a in Frameworks */,
 				E91B48FCEABD4362B40FE880 /* libRNVectorIcons.a in Frameworks */,
 				07FC64C9DD8644C7876D2E80 /* libAirMaps.a in Frameworks */,
+				CC9358B21A5A443C9CB915D5 /* libRNMail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,6 +424,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		281C12691E2CC5BA0027A276 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				281C12841E2CC5BA0027A276 /* libRNMail.a */,
+				281C12861E2CC5BA0027A276 /* RNMailTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2820A6A71E29271D003BADDC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -493,6 +521,7 @@
 				76DE55AC61034BD79C8FB8A9 /* RNI18n.xcodeproj */,
 				3436C8893E8C42E8A30E6E5E /* RNVectorIcons.xcodeproj */,
 				E6DB1A70C8F847E7B69F82F9 /* AirMaps.xcodeproj */,
+				4CE4758A1EE44509896B1620 /* RNMail.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -651,6 +680,10 @@
 					ProjectRef = 76DE55AC61034BD79C8FB8A9 /* RNI18n.xcodeproj */;
 				},
 				{
+					ProductGroup = 281C12691E2CC5BA0027A276 /* Products */;
+					ProjectRef = 4CE4758A1EE44509896B1620 /* RNMail.xcodeproj */;
+				},
+				{
 					ProductGroup = 28CAFCDC1E2625AE005404A2 /* Products */;
 					ProjectRef = 3436C8893E8C42E8A30E6E5E /* RNVectorIcons.xcodeproj */;
 				},
@@ -718,6 +751,20 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		281C12841E2CC5BA0027A276 /* libRNMail.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNMail.a;
+			remoteRef = 281C12831E2CC5BA0027A276 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		281C12861E2CC5BA0027A276 /* RNMailTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNMailTests.xctest;
+			remoteRef = 281C12851E2CC5BA0027A276 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		2820A6AB1E29271D003BADDC /* libAirMaps.a */ = {
@@ -942,6 +989,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -960,6 +1008,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -984,6 +1033,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = COSMARI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1011,6 +1061,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = COSMARI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1070,6 +1121,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1116,6 +1168,7 @@
 					"$(SRCROOT)/../node_modules/react-native-i18n/RNI18n",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

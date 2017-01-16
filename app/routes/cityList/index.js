@@ -29,7 +29,7 @@ class CommunityList extends Component {
       return <List list={this.state.list} />;
     }
     return (
-      <View style={{ marginTop: 20 }}>
+      <View style={{ marginTop: 50 }}>
         <Spinner color='green' size='large' />
       </View>
     );
