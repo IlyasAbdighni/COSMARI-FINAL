@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, NativeModules } from 'react-native';
+
+const Mailer = NativeModules.RNMail;
 
 class Photo extends Component {
   render() {

@@ -15,6 +15,7 @@ import Photo from './routes/photo';
 import MyCityList from './routes/myCityList';
 import AllCity from './routes/cityList';
 import NewsDetail from './routes/news/NewsDetail';
+import Search from './routes/search';
 import Theme from './styles';
 import I18n from './config/lang/i18.js';
 
@@ -119,9 +120,9 @@ class Routes extends Component {
     };
 
     const navBarRightBtn = () => (
-      <View>
+      <TouchableOpacity onPress={Actions.search}>
         <Ionicons style={{ marginBottom: 5 }} name="md-search" size={26} color='rgba(0, 0, 0, 0.87)' />
-      </View>
+      </TouchableOpacity>
     );
 
     return (
@@ -206,6 +207,16 @@ class Routes extends Component {
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
                   component={NewsDetail}
                   sceneStyle={{ paddingTop: 80 }}
+              />
+              <Scene
+                  key='search'
+                  title='bags'
+                  hideNavBar={false}
+                  leftButtonIconStyle={{ tintColor: '#000' }}
+                  navigationBarStyle={{ backgroundColor: '#4CAF50' }}
+                  component={Search}
+                  sceneStyle={{ paddingTop: 80 }}
+                  renderRightButton={null}
               />
 
             </Scene>
