@@ -1,8 +1,7 @@
-import { AsyncStorage } from 'react-native';
+import Realm from 'realm';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { persistStore, autoRehydrate } from 'redux-persist';
 
 import reducers from '../reducers';
 
@@ -15,11 +14,36 @@ middleWare.push(loggerMiddleware);
 
 const createStoreWithMiddleware = applyMiddleware(...middleWare)(createStore);
 
-export const Store = (onComplete) => {
-  const store = autoRehydrate()(createStoreWithMiddleware)(reducers);
-  persistStore(store, { storage: AsyncStorage, debounce: 1000 }, onComplete);
-
-  return store;
+export const Store = () => {
+  return createStoreWithMiddleware(reducers);
 };
 
 export const BaseURl = 'https://cosmari.e-lios.eu/API/';
+
+export const realm = new Realm({
+     schema: [{
+       name: 'myLocalCommunities',
+       properties: {
+         name: 'string',
+         id: 'int',
+         selected: 'bool'
+       }
+     }
+   ]
+   });
+
+export const getChoosenCommunity = () => {
+  const realmList = realm.objects('myLocalCommunities');
+  let community = null;
+  if (realmList.length) {
+    realmList.forEach((item) => {
+      if (item.selected) {
+        community = {
+          name: item.name,
+          id: item.id
+        };
+      }
+    });
+  }
+  return community;
+};

@@ -4,6 +4,7 @@ import {
   Container, Content, CardItem,
   Text, Spinner, Thumbnail
 } from 'native-base';
+import { connect } from 'react-redux';
 
 import { MyParsedText, Card } from '../../components';
 import I18n from '../../config/lang/i18';
@@ -30,7 +31,8 @@ const InfoView = (title, val) => {
 class AboutCity extends Component {
 
   renderText() {
-   if (this.props.city !== null && this.props.city.hasOwnProperty('Nome')) {
+
+   if (!this.props.loading) {
      const community = this.props.city;
      return (
        <Card style={{ flex: 0 }}>
@@ -107,4 +109,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AboutCity;
+
+const mapStateToProps = state => {
+  return {
+    city: state.city.city.Comune,
+    loading: state.city.loading
+   };
+};
+
+export default connect(mapStateToProps)(AboutCity);

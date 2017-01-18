@@ -7,11 +7,11 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { realm } from '../../config';
 import { getCommunityList, getCommunity } from '../../actions/AppActions';
 import I18n from '../../config/lang/i18';
-import rowData from './data.json';
 
-const data = rowData;
+const data = realm.objects('myLocalCommunities');
 
 class DynamicListRow extends Component {
 

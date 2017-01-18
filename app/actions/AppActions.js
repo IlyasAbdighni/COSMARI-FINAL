@@ -34,9 +34,9 @@ export const infoTabPressed = () => {
   return dispatch => {
     axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + id)
         .then(res =>
-            dispatch({ type: 'app_opening_done', payload: res.data })
+            dispatch({ type: 'app_opening_done', payload: res.data, loading: false })
         )
-        .catch(error => this.store.dispatch({ type: 'error', payload: error }));
+        .catch(error => this.store.dispatch({ type: 'error', payload: error, loading: true }));
   };
 };
 
@@ -83,7 +83,7 @@ export const getCommunity = (id, name) => {
       axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + id)
            .then(res => {
                 dispatch({ type: 'app_opening_done', payload: res.data });
-                Actions.main({ type: ActionConst.RESET });
+                Actions.main({ type: ActionConst.RESET, id });
             })
            .catch(error => console.log(error));
     };

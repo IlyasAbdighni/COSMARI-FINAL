@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import MapView from 'react-native-maps';
+import { connect } from 'react-redux';
 
 import { Card, CardSection, Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
@@ -9,13 +10,6 @@ const {height, width} = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
 
 class DateLoc extends Component {
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props === nextProps) {
-      return false;
-    }
-    return true;
-  }
 
   renderDate(d) {
     const day = new Date(d);
@@ -43,7 +37,7 @@ class DateLoc extends Component {
   }
 
   renderScrollView() {
-    if (this.props.city !== null && this.props.city.hasOwnProperty('Date')) {
+    if (!this.props.loading) {
       return (
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {this.renderItems()}
@@ -102,7 +96,7 @@ class DateLoc extends Component {
   }
 
   renderMapView() {
-    if (this.props.city !== null && this.props.city.hasOwnProperty('Comune')) {
+    if (!this.props.loading) {
       const title = this.props.city.Comune.CentriRaccolta[0].IndirizzoCentroDiRaccolta;
       const description = this.props.city.Comune.CentriRaccolta[0].Orario;
 
@@ -155,9 +149,9 @@ class DateLoc extends Component {
     } = styles;
 
     return (
-      <View style={{ flex: 1 }}>
-        <Card>
-          <CardSection style={scrollViewContainer}>
+      <View style={{ flex: 1, paddingBottom: 65 }}>
+        <Card style={{ flex: 1 }}>
+          <CardSection style={[scrollViewContainer, {flex: 2}]}>
             <View style={textTitleContaner}>
               <Text style={textTitle}>{I18n.t('info.leftTab.modeOftransfer')}</Text>
             </View>
@@ -165,16 +159,8 @@ class DateLoc extends Component {
               {this.renderScrollView()}
             </View>
           </CardSection>
-          <CardSection>
-            <MapView
-              style={styles.mapStyle}
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-            />
+          <CardSection style={{ flex: 3}} >
+            {this.renderMapView()}
           </CardSection>
         </Card>
       </View>
@@ -220,9 +206,7 @@ const styles = StyleSheet.create({
     height: 120
   },
   mapStyle: {
-    flex: 1,
-    height: height / 3.5,
-    width: 300
+    flex: 1
   },
   mapCalloutTitle: {
     textAlign: 'center',
@@ -234,4 +218,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DateLoc;
+const mapStateToProps = state => {
+  return {
+    city: state.city.city,
+    loading: state.city.loading
+   };
+};
+
+export default connect(mapStateToProps)(DateLoc);

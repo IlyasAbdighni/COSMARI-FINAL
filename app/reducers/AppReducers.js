@@ -7,13 +7,14 @@ import {
 
 const initialState = {
   city: {},
-  loading: true
+  loading: true,
+  new: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'app_opening_done':
-      return { ...state, city: action.payload };
+      return { ...state, city: action.payload, loading: false };
     case NEWS_OPENING_DONE:
       return { ...state, news: action.payload, loading: false };
     case NEWS_OPENING:
@@ -22,6 +23,8 @@ export default (state = initialState, action) => {
       return { ...state, loading: true };
     case COMMUNITY_LIST_DONE:
       return { ...state, loading: false, cityList: action.payload };
+    case 'error':
+      return { ...state, city: action.payload, loading: true };
     default:
       return state;
   }
