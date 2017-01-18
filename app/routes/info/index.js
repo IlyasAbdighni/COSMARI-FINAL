@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { connect } from 'react-redux';
 import { TabViewAnimated, TabBarTop } from 'react-native-tab-view';
 
 import DateAndLocation from './DateLoc';
@@ -30,7 +29,7 @@ class Info extends Component {
       { key: '1', title: I18n.t('info.leftTab.tabTitle') },
       { key: '2', title: I18n.t('info.rightTab.tabTitle') },
     ],
-    city: null
+    city: this.props.city && null
   };
 
   componentWillReceiveProps(nextProps) {
@@ -50,9 +49,9 @@ class Info extends Component {
   _renderScene = ({ route }) => {
     switch (route.key) {
     case '1':
-      return <DateAndLocation city={this.state.city} style={[styles.page]} />;
+      return <DateAndLocation style={[styles.page]} />;
     case '2':
-      return <AboutCity city={this.state.city && this.state.city.Comune} style={[styles.page]} />;
+      return <AboutCity style={[styles.page]} />;
     default:
       return null;
     }
@@ -72,8 +71,4 @@ class Info extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return { city: state.city.city };
-};
-
-export default connect(mapStateToProps, {})(Info);
+export default Info;

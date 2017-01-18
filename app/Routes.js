@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, NetInfo, Platform } from 'react-native';
 import { Provider, connect } from 'react-redux';
-import { Router, Scene, Actions } from 'react-native-router-flux';
+import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast from 'react-native-root-toast';
 
-import { Store } from './config';
+import { Store, getChoosenCommunity, realm } from './config';
+import { NEWS_OPENING_DONE, NEWS_OPENING } from './actions/types';
 import Info from './routes/info';
 import News from './routes/news';
 import Collect from './routes/collect';
@@ -21,7 +22,11 @@ import I18n from './config/lang/i18.js';
 
 console.disableYellowBox = true;
 const { width } = Dimensions.get('window');
-const RouterWithRedux = connect()(Router);
+const RouterWithRedux = connect((state) => {return state;})(Router);
+let city;
+realm.addListener('change', () => {
+  city = getChoosenCommunity();
+});
 
 class Routes extends Component {
 
@@ -30,12 +35,15 @@ class Routes extends Component {
     this.state = {
       isConnected: true,
       isLoading: true,
-      cities: null
+      cities: null,
+      cityName: null,
+      cityId: null
     };
   }
 
   componentWillMount() {
-    axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=81')
+    city = getChoosenCommunity();
+    axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
           .then(res =>
               this.store.dispatch({ type: 'app_opening_done', payload: res.data })
           )
@@ -51,7 +59,7 @@ class Routes extends Component {
     });
   }
 
-  store = Store(() => this.setState({ isLoading: false }))
+  store = Store()
 
   openMyCityList() {
 
@@ -110,11 +118,27 @@ class Routes extends Component {
     );
   }
 
+  newsTab() {
+    this.store.dispatch({ type: NEWS_OPENING });
+    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + city.id)
+         .then(res => this.store.dispatch({ type: NEWS_OPENING_DONE, payload: res.data }))
+         .catch(error => this.store.dispatch({ type: 'error', payload: error }));
+    Actions.NewsMain();
+    console.log('ilyas tapped news tab');
+  }
+
   render() {
+    console.log(this.props);
     const navBarLeftBtn = () => {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
-          <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+          {
+            city.name ?
+            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>
+              {city.name}
+            </Text> :
+            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+          }
           <Ionicons style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='rgba(0, 0, 0, 0.87)' name="md-arrow-dropdown" size={30} />
         </TouchableOpacity>);
     };
@@ -135,51 +159,62 @@ class Routes extends Component {
 
             <Scene key="root">
               {/* Tab Container */}
-              <Scene
-                key="tabbar"
-                tabs
-                tabBarStyle={{ backgroundColor: Theme.tabBarBGColor }}
-                pressOpacity={0.7}
-              >
-                {/* Tab and it's scenes */}
-                <Scene key="Info" title="Info" icon={this.renderIcons} >
-                  <Scene
-                    key="InfoMain"
-                    component={Info}
-                    title=""
-                    sceneStyle={styles.sceneStyle}
-                    propertyFromParent='hello redux'
-                  />
-                </Scene>
+              <Scene key='main'>
+                <Scene
+                  key="tabbar"
+                  tabs
+                  tabBarStyle={{ backgroundColor: Theme.tabBarBGColor }}
+                  pressOpacity={0.8}
+                  type={ActionConst.REPLACE}
+                >
+                  {/* Tab and it's scenes */}
+                  <Scene key="Info" title="Info" icon={this.renderIcons} >
+                    <Scene
+                      key="InfoMain"
+                      component={Info}
+                      title=""
+                      sceneStyle={styles.sceneStyle}
+                      propertyFromParent='hello redux'
+                    />
+                  </Scene>
 
-                {/* Tab and it's scenes */}
-                <Scene key="News" title="News" icon={this.renderIcons}>
+                  {/* Tab and it's scenes */}
                   <Scene
-                    key="NewsMain"
-                    component={News}
-                    title=""
-                    sceneStyle={styles.sceneStyle}
-                  />
-                </Scene>
+                    key="News"
+                    title="News"
+                    icon={this.renderIcons}
+                    onPress={() => {
+                      this.newsTab();
+                    }}
+                  >
+                    <Scene
+                      key="NewsMain"
+                      component={News}
+                      title=""
+                      sceneStyle={styles.sceneStyle}
+                      type={ActionConst.REFRESH}
+                    />
+                  </Scene>
 
-                {/* Tab and it's scenes */}
-                <Scene key="Collect" title="Collect" icon={this.renderIcons}>
-                  <Scene
-                    key="CollectMain"
-                    component={Collect}
-                    title=""
-                    sceneStyle={styles.sceneStyle}
-                  />
-                </Scene>
+                  {/* Tab and it's scenes */}
+                  <Scene key="Collect" title="Collect" icon={this.renderIcons}>
+                    <Scene
+                      key="CollectMain"
+                      component={Collect}
+                      title=""
+                      sceneStyle={styles.sceneStyle}
+                    />
+                  </Scene>
 
-                {/* Tab and it's scenes */}
-                <Scene key="Photo" title="Photo" icon={this.renderIcons}>
-                  <Scene
-                    key="PhotoMain"
-                    component={Photo}
-                    title=""
-                    sceneStyle={styles.sceneStyle}
-                  />
+                  {/* Tab and it's scenes */}
+                  <Scene key="Photo" title="Photo" icon={this.renderIcons}>
+                    <Scene
+                      key="PhotoMain"
+                      component={Photo}
+                      title=""
+                      sceneStyle={styles.sceneStyle}
+                    />
+                  </Scene>
                 </Scene>
               </Scene>
 
@@ -236,7 +271,7 @@ const styles = StyleSheet.create({
   },
   sceneStyle: {
     paddingTop: Platform.OS === 'ios' ? 61 : 50,
-    paddingBottom: Platform.OS === 'ios' ? 0 : 50,
+    paddingBottom: Theme.paddingBottom,
     backgroundColor: '#fafafa',
   }
 
