@@ -61,14 +61,14 @@ class FormGroup extends Component {
     if (name.length < 3) {
       this.setState({
         name: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.name.validationMessage')
         }
       });
     } else {
       this.setState({
         name: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -89,14 +89,14 @@ class FormGroup extends Component {
     if (phone.length < 6) {
       this.setState({
         phone: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.phone.validationMessage')
         }
       });
     } else {
       this.setState({
         phone: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -116,14 +116,14 @@ class FormGroup extends Component {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{1,4}$/i.test(email)) {
       this.setState({
         email: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.email.validationMessage')
         }
       });
     } else {
       this.setState({
         email: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -144,14 +144,14 @@ class FormGroup extends Component {
     if (address.length < 3) {
       this.setState({
         address: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.address.validationMessage')
         }
       });
     } else {
       this.setState({
         address: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }

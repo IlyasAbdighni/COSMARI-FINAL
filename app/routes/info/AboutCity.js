@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, PixelRatio } from 'react-native';
+import { View, StyleSheet, PixelRatio, Dimensions, Image } from 'react-native';
 import {
   Container, Content, CardItem,
-  Text, Spinner, Thumbnail
+  Text, Thumbnail
 } from 'native-base';
 import { connect } from 'react-redux';
 
-import { MyParsedText, Card } from '../../components';
+import { MyParsedText, Card, Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
+
+const {height, width} = Dimensions.get('window');
 
 const absolutePath = 'https://cosmari.e-lios.eu';
 

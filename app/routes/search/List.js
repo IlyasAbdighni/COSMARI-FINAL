@@ -17,8 +17,10 @@ class List extends Component {
   }
 
   render() {
+    console.log(this.props, 'list');
     return (
       <ListView
+        enableEmptySections
         dataSource={this.dataSource}
         renderRow={this.renderRow}
       />

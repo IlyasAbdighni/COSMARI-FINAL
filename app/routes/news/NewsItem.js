@@ -11,6 +11,7 @@ class NewsItem extends Component {
   }
 
   render() {
+    console.log(this.props);
     const {
       newsStyle,
       newsTitleStyle,
@@ -70,6 +71,7 @@ const styles = {
     borderColor: '#9E9E9E',
     borderWidth: 0,
     borderBottomWidth: 1 / PixelRatio.get(),
+    backgroundColor: 'rgba(0,0,0,0)'
   },
   newsTitleStyle: {
     marginTop: 5,

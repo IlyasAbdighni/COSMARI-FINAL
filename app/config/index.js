@@ -1,4 +1,5 @@
 import Realm from 'realm';
+import axios from 'axios';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -34,7 +35,7 @@ export const realm = new Realm({
 
 export const getChoosenCommunity = () => {
   const realmList = realm.objects('myLocalCommunities');
-  let community = null;
+  let community = {};
   if (realmList.length) {
     realmList.forEach((item) => {
       if (item.selected) {
@@ -47,3 +48,35 @@ export const getChoosenCommunity = () => {
   }
   return community;
 };
+
+export const api = axios.create({
+    baseURL: 'https://cosmari.e-lios.eu/API/',
+    timeout: 5000
+  });
+
+export const API = {
+
+  getVocabulary : () => {
+    const result = api.get('/Vocaboli/List')
+        .then(res => { return {success: true, data: res.data};})
+        .catch(error => { return {success: false, data: error};})
+        .done();
+    return result;
+  }
+};
+
+// export class API {
+//   static api = axios.create({
+//     baseURL: 'https://cosmari.e-lios.eu/API/',
+//     timeout: 5000
+//   });
+
+//   getVocabulary() {
+//     const result = this.api.get('/Vocaboli/List')
+//         .then(res => { return {success: true, data: res.data};})
+//         .catch(error => { return {success: false, data: error};})
+//         .done();
+//     return result;
+//   }
+
+// }

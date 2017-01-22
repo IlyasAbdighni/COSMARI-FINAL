@@ -21,4 +21,7 @@ export const EMAIL_CHANGED = 'email_changed';
 export const ADDRESS_CHANGED = 'address_changed';
 export const DESCRIPTION_CHANGED = 'description_changed';
 
+export const SEARCH_OPENNING = 'search_openning';
+export const SEARCH_OPENNING_DONE = 'search_openning_done';
+
 export const NO_ENTERNET = 'no_internet';

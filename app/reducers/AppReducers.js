@@ -2,13 +2,17 @@ import {
   NEWS_OPENING_DONE,
   NEWS_OPENING,
   COMMUNITY_LIST_OPENING,
-  COMMUNITY_LIST_DONE
+  COMMUNITY_LIST_DONE,
+  SEARCH_OPENNING,
+  SEARCH_OPENNING_DONE
  } from '../actions/types';
 
 const initialState = {
   city: {},
   loading: true,
-  new: []
+  new: [],
+  vocabulary: [],
+  error: null
 };
 
 export default (state = initialState, action) => {
@@ -24,7 +28,11 @@ export default (state = initialState, action) => {
     case COMMUNITY_LIST_DONE:
       return { ...state, loading: false, cityList: action.payload };
     case 'error':
-      return { ...state, city: action.payload, loading: true };
+      return { ...state, error: action.payload, loading: true };
+    case SEARCH_OPENNING:
+      return { ...state, loading: true };
+    case SEARCH_OPENNING_DONE:
+      return { ...state, loading: false, vocabulary: action.payload };
     default:
       return state;
   }
