@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
-import { getCommunity } from '../../actions';
-
 const absolutePath = 'https://cosmari.e-lios.eu';
 
 class ListItem extends Component {
@@ -17,25 +15,27 @@ class ListItem extends Component {
     } = styles;
 
     const {
-      IdComune: id,
-      Nome: name,
-      ImagePath: imagePath
+      NomeVocabolario: name,
+      ImmagineCassonetto: imagePath,
+      NomeCassonetto: secondName,
     } = this.props.item;
 
     return (
       <TouchableOpacity
           style={button}
-          onPress={() => this.props.getCommunity(id, name)}
+          onPress={() => console.log('vocabulary pressed')}
       >
         <View style={itemContainer}>
+          <View style={textContainer}>
+            <Text style={{ fontSize: 17, paddingVertical: 5 }} >{name}</Text>
+            <Text>{secondName}</Text>
+          </View>
           <View style={imageContainer}>
             <Image
-              style={{ height: 60, width: 60 }}
+              style={{ flex: 1, height: null, width: null, resizeMode: 'contain' }}
               source={{ uri: absolutePath + imagePath }}
+              resizeMode='cover'
             />
-          </View>
-          <View style={textContainer}>
-            <Text>{name}</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -46,20 +46,22 @@ class ListItem extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10
+    padding: 20,
+    borderBottomColor: '#8E8E8E',
+    borderBottomWidth: StyleSheet.hairlineWidth, 
   },
   itemContainer: {
     flexDirection: 'row',
 
   },
   imageContainer: {
-    flex: 3,
-    justifyContent: 'center'
+    flex: 2,
+    justifyContent: 'flex-end'
   },
   textContainer: {
     justifyContent: 'center',
-    flex: 7
+    flex: 8
   }
 });
 
-export default connect(null, { getCommunity })(ListItem);
+export default connect(null)(ListItem);

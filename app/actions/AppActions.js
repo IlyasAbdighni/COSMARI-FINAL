@@ -88,3 +88,9 @@ export const getCommunity = (id, name) => {
            .catch(error => console.log(error));
     };
 };
+
+export const getVocabulary = () => {
+  return (dispatch) => {
+    return dispatch({ type: 'something' });
+  }
+};

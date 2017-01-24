@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity, Linking, Platform, PixelRatio } from 'react-native';
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
+import * as Animatable from 'react-native-animatable';
+import ResponsiveImage from 'react-native-responsive-image';
 
 import { Card, CardSection, Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
+import { Theme, Style } from '../../styles';
 
-const {height, width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
 
 class DateLoc extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageWidth: 35,
+      imageHeight: 55
+    };
+  }
 
   renderDate(d) {
     const day = new Date(d);
@@ -45,7 +56,7 @@ class DateLoc extends Component {
       );
     }
     return (
-      <View style={styles.spinnerContainer}>
+      <View style={[styles.spinnerContainer, {paddingTop: 25}]}>
         <Spinner color='green' size='large' />
       </View>
     );
@@ -62,11 +73,13 @@ class DateLoc extends Component {
     return (
       items.map(item => {
         const newDay = this.renderDate(item.Data, ++index);
+        const imageURL = absolutePath + item.ImmagineCassonetto;
         return (
           <View style={imageHolder} key={++index}>
             <Image
-              source={{ uri: absolutePath + item.ImmagineCassonetto }}
+              source={{ uri: imageURL }}
               style={imageStyle}
+              resizeMode="cover"
             />
             <Text
                 style={[imageNameStyle, { color: item.ColoreCassonetto }]}
@@ -149,9 +162,9 @@ class DateLoc extends Component {
     } = styles;
 
     return (
-      <View style={{ flex: 1, paddingBottom: 65 }}>
+      <View style={{ flex: 1, paddingBottom: Theme.scenePaddingBottom }}>
         <Card style={{ flex: 1 }}>
-          <CardSection style={[scrollViewContainer, {flex: 2}]}>
+          <CardSection style={[scrollViewContainer, {flex: 1}]}>
             <View style={textTitleContaner}>
               <Text style={textTitle}>{I18n.t('info.leftTab.modeOftransfer')}</Text>
             </View>
@@ -159,7 +172,7 @@ class DateLoc extends Component {
               {this.renderScrollView()}
             </View>
           </CardSection>
-          <CardSection style={{ flex: 3}} >
+          <CardSection style={{ flex: 2}} >
             {this.renderMapView()}
           </CardSection>
         </Card>
@@ -175,20 +188,19 @@ const styles = StyleSheet.create({
     paddingRight: 5
   },
   scrollViewContainer: {
-    height: 180,
     flexDirection: 'column'
   },
   imageStyle: {
-    width: 90,
-    height: 90,
-    resizeMode: 'contain',
+    width: 52 / Style.RATIO_X,
+    height: 60 / Style.RATIO_X,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    overflow: 'visible'
   },
   imageNameStyle: {
     alignSelf: 'center',
-    paddingTop: 5,
-    fontSize: 18,
+    paddingTop: 2,
+    fontSize: 14,
     fontWeight: '500'
   },
   textTitleContaner: {
@@ -196,14 +208,16 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     color: '#3F51B5',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600'
   },
   imageHolder: {
-    marginTop: 5
+    marginTop: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   spinnerContainer: {
-    height: 120
+    flex: 1
   },
   mapStyle: {
     flex: 1

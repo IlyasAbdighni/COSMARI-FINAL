@@ -1,0 +1,53 @@
+{
+	"liveValues": [
+		{
+			"range": {
+				"from": {
+					"line": 130,
+					"ch": 21
+				},
+				"to": {
+					"line": 130,
+					"ch": 24
+				}
+			},
+			"type": "number",
+			"name": "Width",
+			"max": 600,
+			"group": "IMAGE"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 131,
+					"ch": 22
+				},
+				"to": {
+					"line": 131,
+					"ch": 25
+				}
+			},
+			"type": "number",
+			"name": "Height",
+			"max": 600,
+			"group": "IMAGE"
+		},
+		{
+			"range": {
+				"from": {
+					"line": 133,
+					"ch": 24
+				},
+				"to": {
+					"line": 133,
+					"ch": 33
+				}
+			},
+			"editWith": "dropdown",
+			"dropdownOptions": "ResizeMode",
+			"type": "string",
+			"name": "ResizeMode",
+			"group": "IMAGE"
+		}
+	]
+}

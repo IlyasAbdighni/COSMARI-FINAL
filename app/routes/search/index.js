@@ -1,13 +1,67 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, InteractionManager } from 'react-native';
+import { connect } from 'react-redux';
+
+import List from './List';
+import {Spinner} from '../../components';
 
 class Search extends Component {
+  constructor() {
+    super();
+    this.state = {
+      vocabulary: [],
+      loading: true,
+      error: null
+    };
+    this._loadData.bind(this);
+  }
+
+  componentDidMount() {
+      InteractionManager.runAfterInteractions(() => {
+          this._loadData();
+      });
+  }
+
+  _loadData() {
+    axios.get('https://cosmari.e-lios.eu/API/Vocaboli/List')
+         .then(res => {
+           this.setState({
+            loading: false,
+            vocabulary: res.data
+          });
+         })
+         .catch(error => {
+           this.setState({
+              loading: true,
+              vocabulary: [],
+              error
+            });
+         });
+  }
+
+  renderListView() {
+    if (this.state.loading) {
+       return (
+          <View style={{ marginTop: 50 }}>
+            <Spinner color='green' size='large' />
+          </View>
+        );
+    }
+    return (<List list={this.state.vocabulary} />);
+  }
   render() {
     return (
-      <View>
-        <Text>Search</Text>
+      <View style={{ flex: 1 }}>
+        {this.renderListView()}
       </View>
+      
     );
   }
 }
-export default Search;
+
+const mapStateToProps = state => {
+  return { vocabulary: state.city.vocabulary, loading: state.city.loading };
+};
+
+export default connect(mapStateToProps)(Search);

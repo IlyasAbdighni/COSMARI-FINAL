@@ -1,36 +1,65 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
-import { Spinner } from 'native-base';
 
-import { getChoosenCommunity } from '../../config';
-import { NEWS_OPENING_DONE, NEWS_OPENING } from '../../actions/types';
+import { Spinner } from '../../components';
+import { getChoosenCommunity, realm } from '../../config';
 import NewsList from './NewsList';
+
+let city;
+realm.addListener('change', () => {
+  city = getChoosenCommunity();
+});
 
 class News extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      city: getChoosenCommunity(),
       news: [],
-      loading: true
+      loading: true,
+      error: false,
+      message: ''
     };
+    this._loadData.bind(this);
+  }
+
+  componentDidMount() {
+    city = getChoosenCommunity();
+      InteractionManager.runAfterInteractions(() => {
+          if (typeof this.props.city !== 'undefined') {
+            this._loadData();
+          }
+      });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if(nextProps === this.props) {
+      return true;
+    }
+    return false;
+  }
+
+  _loadData() {
+    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + this.props.city.id)
+         .then(res => this.setState({ news: res.data, loading: false }))
+         .catch(error => this.setState({ error: true, loading: true, message: error }));
   }
 
   renderListView() {
-    if (!this.props.loading && Array.isArray(this.props.news) && this.props.news.length > 0) {
-      return <NewsList news={this.props.news} />;
+    if (!this.state.loading) {
+      return <NewsList news={this.state.news} />;
     }
     return (
-      <View>
+      <View style={{ marginTop: 50 }}>
         <Spinner color='green' size='large' />
       </View>
     );
   }
 
   render() {
+    console.log(this.props);
     return (
       <View style={{ flex: 1 }}>
         {this.renderListView()}

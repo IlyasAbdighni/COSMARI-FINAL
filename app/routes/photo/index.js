@@ -4,6 +4,7 @@ import {
   PixelRatio,
   Platform,
   LayoutAnimation,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Container, Content, Button, InputGroup, Input, Icon } from 'native-base';
@@ -18,6 +19,8 @@ import {
   descriptionChanged,
   sendEmailWithPhoto
 } from '../../actions/FormActions';
+
+const {height, width} = Dimensions.get('window');
 
 class Photo extends Component {
 
@@ -62,14 +65,14 @@ class Photo extends Component {
     if (name.length < 3) {
       this.setState({
         name: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.name.validationMessage')
         }
       });
     } else {
       this.setState({
         name: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -90,14 +93,14 @@ class Photo extends Component {
     if (phone.length < 6) {
       this.setState({
         phone: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.phone.validationMessage')
         }
       });
     } else {
       this.setState({
         phone: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -118,14 +121,14 @@ class Photo extends Component {
     if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{1,4}$/i.test(email)) {
       this.setState({
         email: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.email.validationMessage')
         }
       });
     } else {
       this.setState({
         email: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -147,14 +150,14 @@ class Photo extends Component {
     if (address.length < 3) {
       this.setState({
         address: {
-          icon: (<Icon name='md-close' style={{color: '#d9534f'}} />),
+          icon: (<Icon name='md-close-circle' style={{color: '#d9534f'}} />),
           message: I18n.t('form.address.validationMessage')
         }
       });
     } else {
       this.setState({
         address: {
-          icon: (<Icon name='md-checkmark' style={{color: '#5cb85c'}} />),
+          icon: (<Icon name='md-checkmark-circle' style={{color: '#5cb85c'}} />),
           message: '',
           valid: true
         }
@@ -253,6 +256,8 @@ class Photo extends Component {
                       placeholder={I18n.t('form.name.placeholder')}
                       onChangeText={this.onNameChanged.bind(this)}
                       onSubmitEditing={() => focusNextField('2')}
+                      enablesReturnKeyAutomatically
+                      blurOnSubmit
                     />
                 </InputGroup>
                 <Text style={{ color: '#d9534f', paddingLeft: 20 }}>{name.message}</Text>
@@ -367,23 +372,26 @@ class Photo extends Component {
           });
         }
 
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            source = Object.assign({latitude, longitude}, source);
-            this.setState({
-              avatarSource: source,
-              hasImage: true
-            });
-          },
-          (error) => alert(JSON.stringify(error)),
-          {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-        );
-
-        if (Platform.OS === 'android') {
-          source = {uri: response.uri, isStatic: true};
-        } else {
-          source = {uri: response.uri.replace('file://', ''), isStatic: true};
+        try {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              source = Object.assign({latitude, longitude}, source);
+              this.setState({
+                avatarSource: source,
+                hasImage: true
+              });
+            },
+            (error) => alert('Could not get the user location!'),
+            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+          );
+        } finally {
+          if (Platform.OS === 'android') {
+            console.log(response.uri);
+            source = {uri: response.uri, isStatic: true};
+          } else {
+            source = {uri: response.uri.replace('file://', ''), isStatic: true};
+          }
         }
       }
     });
@@ -427,7 +435,7 @@ class Photo extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ position: 'relative' }} >
         <Content>
           {this.renderFormGroup()}
           <View style={styles.formContainer}>
@@ -485,6 +493,14 @@ const styles = StyleSheet.create({
   addButtonStyle: {
     marginBottom: 10,
     marginTop: 10
+  },
+  backgroundImage: {
+    flex: 1,
+    width,
+    height,
+    position: 'absolute',
+    top: 0,
+    left: 0,
   }
 });
 

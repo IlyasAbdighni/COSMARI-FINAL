@@ -1,11 +1,18 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, NetInfo, Platform } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  NetInfo,
+  Platform,
+} from 'react-native';
 import { Provider, connect } from 'react-redux';
 import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Toast from 'react-native-root-toast';
 
 import { Store, getChoosenCommunity, realm } from './config';
 import { NEWS_OPENING_DONE, NEWS_OPENING } from './actions/types';
@@ -17,12 +24,12 @@ import MyCityList from './routes/myCityList';
 import AllCity from './routes/cityList';
 import NewsDetail from './routes/news/NewsDetail';
 import Search from './routes/search';
-import Theme from './styles';
+import {Theme} from './styles';
 import I18n from './config/lang/i18.js';
 
 console.disableYellowBox = true;
 const { width } = Dimensions.get('window');
-const RouterWithRedux = connect((state) => {return state;})(Router);
+const RouterWithRedux = connect()(Router);
 let city;
 realm.addListener('change', () => {
   city = getChoosenCommunity();
@@ -35,19 +42,22 @@ class Routes extends Component {
     this.state = {
       isConnected: true,
       isLoading: true,
-      cities: null,
-      cityName: null,
-      cityId: null
+      cities: null
     };
   }
 
   componentWillMount() {
     city = getChoosenCommunity();
-    axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
+    if (Object.keys(city).length) {
+      this.initial = false;
+      axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
           .then(res =>
               this.store.dispatch({ type: 'app_opening_done', payload: res.data })
           )
           .catch(error => this.store.dispatch({ type: 'error', payload: error }));
+    } else {
+      this.initial = true;
+    }   
   }
 
   componentDidMount() {
@@ -61,8 +71,9 @@ class Routes extends Component {
 
   store = Store()
 
-  openMyCityList() {
-
+  goToSearchPage() {
+    Actions.search();
+    
   }
 
   renderIcons({ selected, title }) {
@@ -99,53 +110,29 @@ class Routes extends Component {
     );
   }
 
-  renderOffLine() {
-    if (this.state.isConnected) {
-      return (
-        <View />
-      );
-    }
-    return (
-      <Toast
-         visible
-         position={0}
-         shadow
-         animation
-         hideOnPress={false}
-      >
-         ilyas
-       </Toast>
-    );
-  }
-
   newsTab() {
-    this.store.dispatch({ type: NEWS_OPENING });
-    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + city.id)
-         .then(res => this.store.dispatch({ type: NEWS_OPENING_DONE, payload: res.data }))
-         .catch(error => this.store.dispatch({ type: 'error', payload: error }));
-    Actions.NewsMain();
-    console.log('ilyas tapped news tab');
+    Actions.NewsMain({ type: ActionConst.REFRESH, city: city});
   }
 
   render() {
-    console.log(this.props);
     const navBarLeftBtn = () => {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
           {
-            city.name ?
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>
+            Object.keys(city).length > 0 ?
+            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500', lineHeight: 18*1.5 }}>
               {city.name}
             </Text> :
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+            <Text style={{ lineHeight: 18*1.5, color: '#fff', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
           }
-          <Ionicons style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='rgba(0, 0, 0, 0.87)' name="md-arrow-dropdown" size={30} />
+          <Ionicons 
+            style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='#fff' name="md-arrow-dropdown" size={30} />
         </TouchableOpacity>);
     };
 
     const navBarRightBtn = () => (
-      <TouchableOpacity onPress={Actions.search}>
-        <Ionicons style={{ marginBottom: 5 }} name="md-search" size={26} color='rgba(0, 0, 0, 0.87)' />
+      <TouchableOpacity style={{ height: 25, width: 30, justifyContent: 'center', alignItems: 'center' }} onPress={this.goToSearchPage.bind(this)}>
+        <Ionicons style={{ marginBottom: 0 }} name="md-search" size={24} color='#fff' />
       </TouchableOpacity>
     );
 
@@ -183,16 +170,13 @@ class Routes extends Component {
                     key="News"
                     title="News"
                     icon={this.renderIcons}
-                    onPress={() => {
-                      this.newsTab();
-                    }}
+                    onPress={() => this.newsTab()}
                   >
                     <Scene
                       key="NewsMain"
                       component={News}
                       title=""
                       sceneStyle={styles.sceneStyle}
-                      type={ActionConst.REFRESH}
                     />
                   </Scene>
 
@@ -225,6 +209,7 @@ class Routes extends Component {
                 renderRightButton={null}
                 title={I18n.t('sceneTitle.myCityList')}
                 sceneStyle={styles.sceneStyle}
+                renderRightButton={() => <Text>ilyas</Text>}
               />
 
               <Scene
@@ -233,6 +218,7 @@ class Routes extends Component {
                 leftButtonIconStyle={{ tintColor: '#000' }}
                 title={I18n.t('sceneTitle.cityList')}
                 sceneStyle={styles.sceneStyle}
+                renderRightButton={null}
               />
               <Scene
                   key='newsDetail'
@@ -250,7 +236,7 @@ class Routes extends Component {
                   leftButtonIconStyle={{ tintColor: '#000' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
                   component={Search}
-                  sceneStyle={{ paddingTop: 80 }}
+                  sceneStyle={{ paddingTop: Theme.scenePaddingTop }}
                   renderRightButton={null}
               />
 
@@ -267,12 +253,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: width * 0.8,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   sceneStyle: {
     paddingTop: Platform.OS === 'ios' ? 61 : 50,
     paddingBottom: Theme.paddingBottom,
-    backgroundColor: '#fafafa',
+    backgroundColor: Theme.mainBackgroundColor,
   }
 
 });

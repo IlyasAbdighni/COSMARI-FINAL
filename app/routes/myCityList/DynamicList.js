@@ -81,7 +81,7 @@ class DynamicList extends Component {
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this._loadData()
+            this._loadData();
         });
     }
 

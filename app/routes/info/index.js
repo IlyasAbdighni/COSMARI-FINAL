@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 import { TabViewAnimated, TabBarTop } from 'react-native-tab-view';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import DateAndLocation from './DateLoc';
 import AboutCity from './AboutCity';
-import I18n from '../../config/lang/i18';
+import {Theme} from '../../styles';
 
 const initialLayout = {
   height: 0,
@@ -26,8 +27,8 @@ class Info extends Component {
   state = {
     index: 0,
     routes: [
-      { key: '1', title: I18n.t('info.leftTab.tabTitle') },
-      { key: '2', title: I18n.t('info.rightTab.tabTitle') },
+      { key: '1', icon: 'update' },
+      { key: '2', icon: 'view-list'},
     ],
     city: this.props.city && null
   };
@@ -42,8 +43,23 @@ class Info extends Component {
     this.setState({ index });
   };
 
+  _renderIcon = (props) => {
+    return (
+      <Icon
+        name={props.route.icon}
+        size={24}
+        color='white'
+      />
+    );
+  };
+
   _renderHeader = (props) => {
-    return <TabBarTop tabStyle={{ backgroundColor: '#4CAF50', opacity: 1 }} indicatorStyle={{ backgroundColor: 'red' }} {...props} />;
+    return (<TabBarTop 
+              renderIcon={this._renderIcon} 
+              indicatorStyle={{ backgroundColor: Theme.tabBarBGColor }} 
+              style={{ backgroundColor: Theme.navBarBGColor }}
+              {...props} 
+            />);
   };
 
   _renderScene = ({ route }) => {
@@ -66,6 +82,7 @@ class Info extends Component {
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab}
         initialLayout={initialLayout}
+        lazy
       />
     );
   }
