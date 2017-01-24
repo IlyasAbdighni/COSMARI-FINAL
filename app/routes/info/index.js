@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import DateAndLocation from './DateLoc';
 import AboutCity from './AboutCity';
-import Theme from '../../styles';
+import {Theme} from '../../styles';
 
 const initialLayout = {
   height: 0,

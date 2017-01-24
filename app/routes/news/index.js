@@ -1,27 +1,55 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import { View, Dimensions, Image } from 'react-native';
+import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Spinner } from '../../components';
-import { getChoosenCommunity } from '../../config';
+import { getChoosenCommunity, realm } from '../../config';
 import NewsList from './NewsList';
 
-const {height, width} = Dimensions.get('window');
+let city;
+realm.addListener('change', () => {
+  city = getChoosenCommunity();
+});
 
 class News extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      city: getChoosenCommunity(),
       news: [],
-      loading: true
+      loading: true,
+      error: false,
+      message: ''
     };
+    this._loadData.bind(this);
+  }
+
+  componentDidMount() {
+    city = getChoosenCommunity();
+      InteractionManager.runAfterInteractions(() => {
+          if (typeof this.props.city !== 'undefined') {
+            this._loadData();
+          }
+      });
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if(nextProps === this.props) {
+      return true;
+    }
+    return false;
+  }
+
+  _loadData() {
+    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + this.props.city.id)
+         .then(res => this.setState({ news: res.data, loading: false }))
+         .catch(error => this.setState({ error: true, loading: true, message: error }));
   }
 
   renderListView() {
-    if (!this.props.loading && Array.isArray(this.props.news) && this.props.news.length > 0) {
-      return <NewsList news={this.props.news} />;
+    if (!this.state.loading) {
+      return <NewsList news={this.state.news} />;
     }
     return (
       <View style={{ marginTop: 50 }}>
@@ -31,24 +59,9 @@ class News extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <View style={{ flex: 1 }}>
-        <View>
-            <Image 
-              source={require('../../assets/bg_7.jpg')} 
-              style={{
-                flex: 1,
-                width,
-                height,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                backgroundColor: 'rgba(0,0,0,0)'
-              }} 
-              resizeMode='cover'
-              blurRadius={5}
-            />
-          </View>
         {this.renderListView()}
       </View>
     );

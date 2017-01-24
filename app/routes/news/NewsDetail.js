@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Linking, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Linking } from 'react-native';
 import { Container, Content, H2, Text, CardItem } from 'native-base';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
-
-const {height, width} = Dimensions.get('window');
 
 const NewsDetail = ({ newsTitle, newsBody, date }) => {
   const { container, body, titleStyle, dateStyle } = styles;
@@ -15,21 +13,6 @@ const NewsDetail = ({ newsTitle, newsBody, date }) => {
 
   return (
     <Container>
-      <View>
-            <Image 
-              source={require('../../assets/bg_7.jpg')} 
-              style={{
-                flex: 1,
-                width,
-                height,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                backgroundColor: 'rgba(0,0,0,0)'
-              }} 
-              blurRadius={5}
-            />
-          </View>
       <Content>
         <View style={container}>
           <CardItem style={titleStyle}>

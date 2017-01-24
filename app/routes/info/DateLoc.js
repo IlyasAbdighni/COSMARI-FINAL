@@ -3,15 +3,24 @@ import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
+import ResponsiveImage from 'react-native-responsive-image';
 
 import { Card, CardSection, Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
-import Theme from '../../styles';
+import { Theme, Style } from '../../styles';
 
-const {height, width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
 
 class DateLoc extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageWidth: 35,
+      imageHeight: 55
+    };
+  }
 
   renderDate(d) {
     const day = new Date(d);
@@ -64,11 +73,13 @@ class DateLoc extends Component {
     return (
       items.map(item => {
         const newDay = this.renderDate(item.Data, ++index);
+        const imageURL = absolutePath + item.ImmagineCassonetto;
         return (
           <View style={imageHolder} key={++index}>
             <Image
-              source={{ uri: absolutePath + item.ImmagineCassonetto }}
+              source={{ uri: imageURL }}
               style={imageStyle}
+              resizeMode="cover"
             />
             <Text
                 style={[imageNameStyle, { color: item.ColoreCassonetto }]}
@@ -180,16 +191,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   imageStyle: {
-    width: 30 * PixelRatio.get(),
-    height: 30 * PixelRatio.get(),
-    resizeMode: 'contain',
+    width: 52 / Style.RATIO_X,
+    height: 60 / Style.RATIO_X,
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
+    overflow: 'visible'
   },
   imageNameStyle: {
     alignSelf: 'center',
-    paddingTop: 5,
-    fontSize: 16,
+    paddingTop: 2,
+    fontSize: 14,
     fontWeight: '500'
   },
   textTitleContaner: {

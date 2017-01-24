@@ -436,13 +436,6 @@ class Photo extends Component {
   render() {
     return (
       <Container style={{ position: 'relative' }} >
-        <View>
-          <Image 
-            source={require('../../assets/bg_7.jpg')} 
-            style={styles.backgroundImage} 
-            blurRadius={20}
-          />
-        </View>
         <Content>
           {this.renderFormGroup()}
           <View style={styles.formContainer}>

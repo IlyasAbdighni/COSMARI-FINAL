@@ -24,7 +24,7 @@ import MyCityList from './routes/myCityList';
 import AllCity from './routes/cityList';
 import NewsDetail from './routes/news/NewsDetail';
 import Search from './routes/search';
-import Theme from './styles';
+import {Theme} from './styles';
 import I18n from './config/lang/i18.js';
 
 console.disableYellowBox = true;
@@ -72,11 +72,8 @@ class Routes extends Component {
   store = Store()
 
   goToSearchPage() {
-    this.store.dispatch({ type: "search_openning" });
-    axios.get('https://cosmari.e-lios.eu/API/Vocaboli/List')
-         .then(res => this.store.dispatch({ type: 'search_openning_done', payload: res.data }))
-         .catch(error => this.store.dispatch({ type: 'error', payload: error }));
     Actions.search();
+    
   }
 
   renderIcons({ selected, title }) {
@@ -114,11 +111,7 @@ class Routes extends Component {
   }
 
   newsTab() {
-    this.store.dispatch({ type: NEWS_OPENING });
-    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + city.id)
-         .then(res => this.store.dispatch({ type: NEWS_OPENING_DONE, payload: res.data }))
-         .catch(error => this.store.dispatch({ type: 'error', payload: error }));
-    Actions.NewsMain();
+    Actions.NewsMain({ type: ActionConst.REFRESH, city: city});
   }
 
   render() {
@@ -126,20 +119,20 @@ class Routes extends Component {
       return (
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
           {
-            Object.keys(city) ?
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>
+            Object.keys(city).length > 0 ?
+            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500', lineHeight: 18*1.5 }}>
               {city.name}
             </Text> :
-            <Text style={{ color: 'rgba(0, 0, 0, 0.87)', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+            <Text style={{ lineHeight: 18*1.5, color: '#fff', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
           }
-          <Ionicons style={{
-              marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='rgba(0, 0, 0, 0.87)' name="md-arrow-dropdown" size={30} />
+          <Ionicons 
+            style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='#fff' name="md-arrow-dropdown" size={30} />
         </TouchableOpacity>);
     };
 
     const navBarRightBtn = () => (
       <TouchableOpacity style={{ height: 25, width: 30, justifyContent: 'center', alignItems: 'center' }} onPress={this.goToSearchPage.bind(this)}>
-        <Ionicons style={{ marginBottom: 0 }} name="md-search" size={24} color='rgba(0, 0, 0, 0.87)' />
+        <Ionicons style={{ marginBottom: 0 }} name="md-search" size={24} color='#fff' />
       </TouchableOpacity>
     );
 
@@ -177,16 +170,13 @@ class Routes extends Component {
                     key="News"
                     title="News"
                     icon={this.renderIcons}
-                    onPress={() => {
-                      this.newsTab();
-                    }}
+                    onPress={() => this.newsTab()}
                   >
                     <Scene
                       key="NewsMain"
                       component={News}
                       title=""
                       sceneStyle={styles.sceneStyle}
-                      type={ActionConst.REFRESH}
                     />
                   </Scene>
 
@@ -263,7 +253,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     width: width * 0.8,
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   sceneStyle: {
     paddingTop: Platform.OS === 'ios' ? 61 : 50,

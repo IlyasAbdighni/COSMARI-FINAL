@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import { View, Text, InteractionManager } from 'react-native';
+import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
-import SearchBar from 'react-native-material-design-searchbar';
 
 import List from './List';
 import {Spinner} from '../../components';
@@ -11,21 +11,36 @@ class Search extends Component {
     super();
     this.state = {
       vocabulary: [],
-      loading: true
+      loading: true,
+      error: null
     };
+    this._loadData.bind(this);
   }
 
   componentDidMount() {
       InteractionManager.runAfterInteractions(() => {
-          this.setState({
-            loading: this.props.loading,
-            vocabulary: this.props.vocabulary
-          });
+          this._loadData();
       });
   }
 
+  _loadData() {
+    axios.get('https://cosmari.e-lios.eu/API/Vocaboli/List')
+         .then(res => {
+           this.setState({
+            loading: false,
+            vocabulary: res.data
+          });
+         })
+         .catch(error => {
+           this.setState({
+              loading: true,
+              vocabulary: [],
+              error
+            });
+         });
+  }
+
   renderListView() {
-    console.log(this.state.loading, 'index');
     if (this.state.loading) {
        return (
           <View style={{ marginTop: 50 }}>
@@ -38,19 +53,6 @@ class Search extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ backgroundColor: '#F5F5F5' }}>
-          <SearchBar
-            onSearchChange={() => console.log('On Focus')}
-            height={30}
-            onFocus={() => console.log('On Focus')}
-            onBlur={() => console.log('On B lur')}
-            placeholder={'Search...'}
-            autoCorrect={false}
-            padding={5}
-            returnKeyType={'search'}
-            inputStyle={{ backgroundColor: '#fff', borderRadius: 5 }}
-          />
-        </View>
         {this.renderListView()}
       </View>
       

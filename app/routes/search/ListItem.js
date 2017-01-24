@@ -27,14 +27,14 @@ class ListItem extends Component {
       >
         <View style={itemContainer}>
           <View style={textContainer}>
-            <Text>{name}</Text>
+            <Text style={{ fontSize: 17, paddingVertical: 5 }} >{name}</Text>
             <Text>{secondName}</Text>
           </View>
           <View style={imageContainer}>
             <Image
-              style={{ height: 60, width: 60 }}
+              style={{ flex: 1, height: null, width: null, resizeMode: 'contain' }}
               source={{ uri: absolutePath + imagePath }}
-              resizeMode='contain'
+              resizeMode='cover'
             />
           </View>
         </View>
@@ -46,7 +46,9 @@ class ListItem extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10
+    padding: 20,
+    borderBottomColor: '#8E8E8E',
+    borderBottomWidth: StyleSheet.hairlineWidth, 
   },
   itemContainer: {
     flexDirection: 'row',

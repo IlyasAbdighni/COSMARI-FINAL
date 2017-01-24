@@ -26,9 +26,6 @@ class NewsList extends Component {
   _onRefresh(refresh) {
     console.log('ilyas');
     refresh && this.setState({ isRefreshing: true });
-
-    console.log(api);
-
   }
 
   render() {
