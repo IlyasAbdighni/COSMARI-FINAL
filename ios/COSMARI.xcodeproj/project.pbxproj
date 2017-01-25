@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -25,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		18E1B2E01C5C41F4B61A60C0 /* Skia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32342886B66C4502AA4A878C /* Skia.ttf */; };
 		281D2FA11E37999800139A39 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281D2F861E3798DE00139A39 /* libART.a */; };
+		286032301E38A06F00AAE785 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2860321D1E38A04900AAE785 /* libRCTPushNotification.a */; };
 		28E051FD1E2B891B007F64A2 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E051E71E2B88D3007F64A2 /* libRCTAnimation.a */; };
 		3A41A26E8ECC4AA3941109FB /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F16929029CC14D4D89DF0386 /* Roboto_medium.ttf */; };
 		3F761F96D359451898997AEE /* Andale Mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A103E732F410CBFCD43D2 /* Andale Mono.ttf */; };
@@ -162,6 +162,20 @@
 			remoteGlobalIDString = 11FA5C511C4A1296003AC2EE;
 			remoteInfo = AirMaps;
 		};
+		2860321C1E38A04900AAE785 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		2860321E1E38A04900AAE785 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2DD0EFE61DA8533A00B0C975;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 		28CAFCB51E26245F005404A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -286,6 +300,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		23B0D56D1D424FC489C6A50F /* Comic Sans MS.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Comic Sans MS.ttf"; path = "../node_modules/native-base/Fonts/Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		281D2F801E3798DD00139A39 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		28E051DF1E2B88D2007F64A2 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		2A5A103E732F410CBFCD43D2 /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
 		32342886B66C4502AA4A878C /* Skia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Skia.ttf; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; };
@@ -336,6 +351,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				286032301E38A06F00AAE785 /* libRCTPushNotification.a in Frameworks */,
 				281D2FA11E37999800139A39 /* libART.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				28E051FD1E2B891B007F64A2 /* libRCTAnimation.a in Frameworks */,
@@ -503,6 +519,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2860320C1E38A04800AAE785 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2860321D1E38A04900AAE785 /* libRCTPushNotification.a */,
+				2860321F1E38A04900AAE785 /* libRCTPushNotification-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		28CAFCDA1E2625AE005404A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +594,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */,
 				281D2F801E3798DD00139A39 /* ART.xcodeproj */,
 				28E051DF1E2B88D2007F64A2 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -735,6 +761,10 @@
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
 				},
 				{
+					ProductGroup = 2860320C1E38A04800AAE785 /* Products */;
+					ProjectRef = 2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */;
+				},
+				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
 					ProjectRef = 139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */;
 				},
@@ -880,6 +910,20 @@
 			fileType = archive.ar;
 			path = libAirMaps.a;
 			remoteRef = 2820A6AA1E29271D003BADDC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2860321D1E38A04900AAE785 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 2860321C1E38A04900AAE785 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2860321F1E38A04900AAE785 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = 2860321E1E38A04900AAE785 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		28CAFCB61E26245F005404A2 /* libRCTImage-tvOS.a */ = {
@@ -1151,6 +1195,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = COSMARI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1182,6 +1227,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS/**",
 				);
 				INFOPLIST_FILE = COSMARI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

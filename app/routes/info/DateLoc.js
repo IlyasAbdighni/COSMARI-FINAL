@@ -20,6 +20,7 @@ class DateLoc extends Component {
       imageWidth: 35,
       imageHeight: 55
     };
+    this.goToNativeMapApp = this.goToNativeMapApp.bind(this);
   }
 
   renderDate(d) {
@@ -42,6 +43,7 @@ class DateLoc extends Component {
   }
 
   goToNativeMapApp() {
+    console.log(this.props);
     const latitude = this.props.city.Comune.CentriRaccolta[0].Latitudine;
     const longitude = this.props.city.Comune.CentriRaccolta[0].Longitudine;
     Linking.openURL(`http://maps.apple.com/?daddr=${latitude},${longitude}`);
@@ -96,7 +98,7 @@ class DateLoc extends Component {
   renderMapCallout(title, description) {
     return (
       <TouchableOpacity
-        onPress={this.goToNativeMapApp.bind(this)}
+        onPress={this.goToNativeMapApp}
       >
         <View>
           <Text style={styles.mapCalloutTitle}>{title}</Text>
@@ -110,38 +112,40 @@ class DateLoc extends Component {
 
   renderMapView() {
     if (!this.props.loading) {
-      const title = this.props.city.Comune.CentriRaccolta[0].IndirizzoCentroDiRaccolta;
-      const description = this.props.city.Comune.CentriRaccolta[0].Orario;
+      const cityArea = this.props.city.Comune.CentriRaccolta;
 
       return (
         <MapView
           style={styles.mapStyle}
           region={{
-            latitude: this.props.city.Comune.CentriRaccolta[0].Latitudine,
-            longitude: this.props.city.Comune.CentriRaccolta[0].Longitudine,
+            latitude: cityArea[0].Latitudine,
+            longitude: cityArea[0].Longitudine,
             latitudeDelta: 0.005,
             longitudeDelta: 0.003,
           }}
-          onCalloutPress={this.goToNativeMapApp}
         >
-          <MapView.Marker
-          coordinate={{
-            latitude: this.props.city.Comune.CentriRaccolta[0].Latitudine,
-            longitude: this.props.city.Comune.CentriRaccolta[0].Longitudine
-            // latitude: 37.78825,
-            // longitude: -122.4324,
-          }}
-          title={title}
-          description={description}
-          onCalloutPress={this.goToNativeMapApp}
-          onPress={this.goToNativeMapApp}
-          >
-            <MapView.Callout
-              style={{ width: width * 0.6 }}
+          
+          {cityArea.map(marker => (
+            <MapView.Marker
+              coordinate={{
+                latitude: marker.Latitudine,
+                longitude: marker.Longitudine
+                // latitude: 37.78825,
+                // longitude: -122.4324,
+              }}
+              title={marker.IndirizzoCentroDiRaccolta}
+              description={marker.Orario}
+              onCalloutPress={this.goToNativeMapApp}
             >
-              {this.renderMapCallout(title, description)}
-            </MapView.Callout>
-          </MapView.Marker>
+              <MapView.Callout
+                style={{ width: width * 0.6 }}
+              >
+                {this.renderMapCallout(marker.IndirizzoCentroDiRaccolta, marker.Orario)}
+              </MapView.Callout>
+            </MapView.Marker>
+
+          ))}
+            
         </MapView>
 
       );
