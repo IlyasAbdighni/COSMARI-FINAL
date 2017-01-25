@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
+import { DoubleCircleLoader } from 'react-native-indicator';
 
 import List from './List';
 import {Spinner} from '../../components';
