@@ -24,6 +24,7 @@
     "react-native-maps": "^0.12.4",
     "react-native-material-design-searchbar": "^1.1.0",
     "react-native-parsed-text": "0.0.16",
+    "react-native-push-notification": "^2.2.1",
     "react-native-responsive-image": "^2.0.1",
     "react-native-root-toast": "^1.0.3",
     "react-native-router-flux": "^3.37.0",
