@@ -35,10 +35,7 @@ class App extends Component {
 
   handleAppStateChange(appState) {
     if (appState === 'background') {
-      PushNotification.localNotificationSchedule({
-        message: "My Notification Message", // (required)
-        date: new Date(Date.now() + (5 * 1000)) // in 60 secs
-      });
+      console.log('app is in background');
     }
   }
 
@@ -69,7 +66,6 @@ class App extends Component {
       <View style={{ flex: 1 }}>
         {this.renderApp()}
         <Routes />
-        <PushNotificationCtr />
       </View>
     );
   }

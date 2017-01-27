@@ -50,7 +50,9 @@ class Routes extends Component {
     city = getChoosenCommunity();
     if (Object.keys(city).length) {
       this.initial = false;
-      axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
+      const api = axios.create();
+      api.defaults.timeout = 2500;
+      api.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
           .then(res =>
               this.store.dispatch({ type: 'app_opening_done', payload: res.data })
           )
@@ -120,10 +122,10 @@ class Routes extends Component {
         <TouchableOpacity style={styles.leftBtnHolder} onPress={Actions.MyCity}>
           {
             Object.keys(city).length > 0 ?
-            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500', lineHeight: 18*1.5 }}>
+            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500' }} ellipsizeMode='tail' numberOfLines={1} >
               {city.name}
             </Text> :
-            <Text style={{ lineHeight: 18*1.5, color: '#fff', fontSize: 18, fontWeight: '500' }}>{I18n.t('header.buttonText')}</Text>
+            <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500' }}ellipsizeMode='tail' numberOfLines={1} > {I18n.t('header.buttonText')}</Text>
           }
           <Ionicons 
             style={{ marginLeft: 7, marginTop: 5, textAlign: 'center' }} color='#fff' name="md-arrow-dropdown" size={30} />
@@ -132,13 +134,14 @@ class Routes extends Component {
 
     const navBarRightBtn = () => (
       <TouchableOpacity style={{ height: 25, width: 30, justifyContent: 'center', alignItems: 'center' }} onPress={this.goToSearchPage.bind(this)}>
-        <Ionicons style={{ marginBottom: 0 }} name="md-search" size={24} color='#fff' />
+        <Ionicons style={{ marginBottom: 6 }} name="md-search" size={24} color='#fff' />
       </TouchableOpacity>
     );
 
     return (
       <Provider store={this.store}>
         <RouterWithRedux
+          duration={0}
           renderLeftButton={navBarLeftBtn}
           renderRightButton={navBarRightBtn}
           navigationBarStyle={{ backgroundColor: Theme.navBarBGColor, borderBottomWidth: 0 }}
@@ -205,35 +208,35 @@ class Routes extends Component {
               <Scene
                 key='MyCity'
                 component={MyCityList}
-                leftButtonIconStyle={{ tintColor: '#000' }}
+                leftButtonIconStyle={{ tintColor: '#fff' }}
                 renderRightButton={null}
                 title={I18n.t('sceneTitle.myCityList')}
-                sceneStyle={styles.sceneStyle}
-                renderRightButton={() => <Text>ilyas</Text>}
+                sceneStyle={[styles.sceneStyle, {paddingBottom: 0}]}
+                renderRightButton={null}
               />
 
               <Scene
                 key='AllCity'
                 component={AllCity}
-                leftButtonIconStyle={{ tintColor: '#000' }}
+                leftButtonIconStyle={{ tintColor: '#fff' }}
                 title={I18n.t('sceneTitle.cityList')}
-                sceneStyle={styles.sceneStyle}
+                sceneStyle={[styles.sceneStyle, {paddingBottom: 0}]}
                 renderRightButton={null}
               />
               <Scene
                   key='newsDetail'
                   title='News'
                   hideNavBar={false}
-                  leftButtonIconStyle={{ tintColor: '#000' }}
+                  leftButtonIconStyle={{ tintColor: '#fff' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
                   component={NewsDetail}
-                  sceneStyle={{ paddingTop: 80 }}
+                  sceneStyle={{ paddingTop: 60 }}
               />
               <Scene
                   key='search'
                   title='bags'
                   hideNavBar={false}
-                  leftButtonIconStyle={{ tintColor: '#000' }}
+                  leftButtonIconStyle={{ tintColor: '#fff' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
                   component={Search}
                   sceneStyle={{ paddingTop: Theme.scenePaddingTop }}

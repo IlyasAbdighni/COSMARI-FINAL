@@ -2,16 +2,20 @@
 import React, {Component} from 'react';
 import {
     View, Text, Alert, ListView, StyleSheet,
-    TouchableOpacity, InteractionManager, RefreshControl, Animated
+    TouchableOpacity, InteractionManager, RefreshControl, Animated, Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Spinner } from 'native-base';
 
 import { realm } from '../../config';
-import { getCommunityList, getCommunity } from '../../actions/AppActions';
+import { getCommunity } from '../../actions/AppActions';
+// import { Spinner } from '../../components';
 import I18n from '../../config/lang/i18';
 
 const data = realm.objects('myLocalCommunities');
+const { width, height } = Dimensions.get('window');
 
 class DynamicListRow extends Component {
 
@@ -76,7 +80,8 @@ class DynamicList extends Component {
             rowHasChanged : (row1, row2) => true
         }),
         refreshing  : false,
-        rowToDelete : null
+        rowToDelete : null,
+        overlay: false
     };
 
     componentDidMount() {
@@ -111,7 +116,7 @@ class DynamicList extends Component {
     }
 
     goToCommunityList() {
-      this.props.getCommunityList();
+      Actions.AllCity();
     }
 
 
@@ -143,6 +148,15 @@ class DynamicList extends Component {
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow.bind(this)}
                 />
+                {
+                    this.state.overlay ? 
+                    <View style={styles.overlay} >
+                        <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }} >
+                            <Spinner color='blue' size='large' />
+                        </View>
+                    </View> :
+                    <View />
+                }
             </View>
         );
     }
@@ -162,7 +176,10 @@ class DynamicList extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.contact}
-                      onPress={() => this.props.getCommunity(rowData.id, null)}
+                      onPress={() => {
+                          this.setState({ overlay: true });
+                          this.props.getCommunity(rowData.id, null);
+                      }}
                     >
                         <Text style={[styles.name]}>{rowData.name}</Text>
                         {
@@ -297,7 +314,17 @@ const styles = StyleSheet.create({
         color     : '#DA281C',
         alignSelf : 'center',
         textAlign: 'center'
-    }
+    },
+    overlay: {
+        flex: 1,
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        opacity: 0.7,
+        backgroundColor: '#fff',
+        width,
+        height
+    } 
 });
 
-export default connect(null, { getCommunityList, getCommunity })(DynamicList);
+export default connect(null, { getCommunity })(DynamicList);

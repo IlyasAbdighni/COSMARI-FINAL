@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { getCommunity } from '../../actions/AppActions';
+import { Text } from '../../components';
 
 const absolutePath = 'https://cosmari.e-lios.eu';
 

@@ -45,13 +45,14 @@ export const descriptionChanged = text => {
 };
 
 export const sendEmailWithPhoto = ({ name, phone, email, address, description, position = null }) => {
+  console.log(position.uri);
   return () => {
     const googleMapPosition =
         position ? `${I18n.t('emailContent.googleMapLink')}: https://www.google.it/maps/place/${position.latitude},${position.longitude}`
                  : '';
     Mailer.mail({
-      subject: 'Need to collect this!',
-      recipients: ['moreno.gentili@e-lios.eu'],
+      subject: I18n.t('emailContent.emailSubject'),
+      recipients: ['udunig@aliyun.com'],
       body: `
         ${I18n.t('emailContent.sender')}: ${name}
         ${I18n.t('emailContent.senderPhone')}: ${phone}
@@ -63,7 +64,7 @@ export const sendEmailWithPhoto = ({ name, phone, email, address, description, p
       attachment: {
         path: position.uri,
         type: 'jpg',
-        name: 'Photo of the thing.jpg',
+        name: 'Photo of the thing',
       }
     }, (error, event) => {
       console.log(event);
@@ -92,7 +93,7 @@ export const sendEmailOnlyText = ({ name, phone, email, address, description, po
   return () => {
     Mailer.mail({
       subject: I18n.t('emailContent.emailSubject'),
-      recipients: ['moreno.gentili@e-lios.eu'],
+      recipients: ['udunig@aliyun.com'],
       body: `
         ${I18n.t('emailContent.sender')}: ${name}
         ${I18n.t('emailContent.senderPhone')}: ${phone}

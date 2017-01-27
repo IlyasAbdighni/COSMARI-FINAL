@@ -64,7 +64,7 @@ const en = {
       validationMessage: 'Description is required'
     },
     addApic: 'Add a photo',
-    deletePic: 'Delete the picture',
+    deletePic: 'Delete the photo',
     changePic: 'Change the photo'
   },
   emailContent: {
@@ -72,7 +72,7 @@ const en = {
     sender: 'Sender Name',
     senderPhone: 'Sender phone number',
     senderEmail: 'Sender email',
-    senderAddress: 'Sneder address',
+    senderAddress: 'Sender address',
     description: 'Description',
     googleMapLink: 'Google map link',
     emailSentFail: 'Could not send mail. Please try to send it again or send it through browser using your own email',

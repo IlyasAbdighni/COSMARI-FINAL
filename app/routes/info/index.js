@@ -82,7 +82,6 @@ class Info extends Component {
         renderHeader={this._renderHeader}
         onRequestChangeTab={this._handleChangeTab}
         initialLayout={initialLayout}
-        lazy
       />
     );
   }

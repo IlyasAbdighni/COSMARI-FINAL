@@ -1,9 +1,10 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
+import { Spinner } from 'native-base';
 
 import List from './List';
-import { Spinner } from '../../components/Spinner';
 
 class CommunityList extends Component {
 
@@ -11,25 +12,31 @@ class CommunityList extends Component {
     super();
     this.state = {
       list: [],
-      loading: true
+      loading: true,
+      error: null,
+      overlay: false
     };
+    this._loadData = this._loadData.bind(this);
   }
 
   componentDidMount() {
       InteractionManager.runAfterInteractions(() => {
-          this.setState({
-            loading: this.props.loading,
-            list: this.props.list
-          });
+          this._loadData();
       });
   }
 
+  _loadData() {
+    axios.get('https://cosmari.e-lios.eu/API/Comuni/List')
+         .then(res => this.setState({ list: res.data, loading: false, error: null }))
+         .catch(error => this.setState({ list: [], error, loading: true }));
+  }
+
   renderListView() {
-    if (!this.state.loading) {
+    if (!this.state.loading && !this.state.error) {
       return <List list={this.state.list} />;
     }
     return (
-      <View style={{ marginTop: 50 }}>
+      <View style={{ marginTop: 50, alignItems: 'center' }}>
         <Spinner color='green' size='large' />
       </View>
     );

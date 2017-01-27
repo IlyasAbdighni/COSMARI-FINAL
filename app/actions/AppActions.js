@@ -89,8 +89,3 @@ export const getCommunity = (id, name) => {
     };
 };
 
-export const getVocabulary = () => {
-  return (dispatch) => {
-    return dispatch({ type: 'something' });
-  }
-};

@@ -4,8 +4,10 @@ import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import ResponsiveImage from 'react-native-responsive-image';
+import FitImage from 'react-native-fit-image';
+import { Spinner } from 'native-base';
 
-import { Card, CardSection, Spinner } from '../../components';
+import { Card, CardSection } from '../../components';
 import I18n from '../../config/lang/i18';
 import { Theme, Style } from '../../styles';
 
@@ -16,10 +18,6 @@ class DateLoc extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      imageWidth: 35,
-      imageHeight: 55
-    };
     this.goToNativeMapApp = this.goToNativeMapApp.bind(this);
   }
 
@@ -58,7 +56,7 @@ class DateLoc extends Component {
       );
     }
     return (
-      <View style={[styles.spinnerContainer, {paddingTop: 25}]}>
+      <View style={[styles.spinnerContainer, {alignItems: 'center'}]}>
         <Spinner color='green' size='large' />
       </View>
     );
@@ -70,19 +68,22 @@ class DateLoc extends Component {
       imageNameStyle,
       imageHolder
     } = styles;
-    let index = -1;
     const items = this.props.city.Date;
     return (
-      items.map(item => {
-        const newDay = this.renderDate(item.Data, ++index);
+      items.map((item, i) => {
+        const newDay = this.renderDate(item.Data, i);
         const imageURL = absolutePath + item.ImmagineCassonetto;
         return (
-          <View style={imageHolder} key={++index}>
-            <Image
-              source={{ uri: imageURL }}
-              style={imageStyle}
-              resizeMode="cover"
-            />
+          <View style={imageHolder} key={i} >
+            <View style={{ width: 65, height: 65 }} >
+              <Image
+                indicator={false}
+                source={{ uri: imageURL }}
+                style={imageStyle}
+                resizeMode={Platform.OS === 'ios' ? 'contain' : 'cover'}
+              />
+            </View>
+            
             <Text
                 style={[imageNameStyle, { color: item.ColoreCassonetto }]}
             >
@@ -195,8 +196,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   imageStyle: {
-    width: 52 / Style.RATIO_X,
-    height: 60 / Style.RATIO_X,
+    flex: 1,
+    width: null,
+    height: null,
     marginLeft: 10,
     marginRight: 10,
     overflow: 'visible'
