@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Container, Content, Button, InputGroup, Input, Icon } from 'native-base';
 import ImagePicker from 'react-native-image-picker';
 import I18n from '../../config/lang/i18';
+import { Theme } from '../../styles';
 
 import {
   nameChanged,
@@ -28,22 +29,22 @@ class Photo extends Component {
     avatarSource: null,
     hasImage: false,
     name: {
-      icon: (<Icon name='md-person' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-person' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     email: {
-      icon: (<Icon name='md-at' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-at' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     phone: {
-      icon: (<Icon name='md-phone-portrait' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-phone-portrait' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     address: {
-      icon: (<Icon name='md-pin' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-pin' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
@@ -258,6 +259,7 @@ class Photo extends Component {
                       onSubmitEditing={() => focusNextField('2')}
                       enablesReturnKeyAutomatically
                       blurOnSubmit
+                      style={{ padding: 0 }}
                     />
                 </InputGroup>
                 <Text style={{ color: '#d9534f', paddingLeft: 20 }}>{name.message}</Text>
@@ -342,7 +344,7 @@ class Photo extends Component {
 
   selectPhotoTapped() {
     const options = {
-      title: I18n.t('title'),
+      title: I18n.t('photo.title'),
       cancelButtonTitle: I18n.t('cancel'),
       takePhotoButtonTitle: I18n.t('photo.takePhoto'),
       chooseFromLibraryButtonTitle: I18n.t('photo.chooseFromLibrary'),
@@ -350,6 +352,9 @@ class Photo extends Component {
       maxWidth: 500,
       maxHeight: 500,
       configOptions: {
+        skipBackup: true
+      },
+      storageOptions: {
         skipBackup: true
       }
     };
@@ -388,7 +393,8 @@ class Photo extends Component {
         } finally {
           if (Platform.OS === 'android') {
             console.log(response.uri);
-            source = {uri: response.uri, isStatic: true};
+            source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+            this.setState({ avatarSource: source, hasImage: true });
           } else {
             source = {uri: response.uri.replace('file://', ''), isStatic: true};
           }
@@ -404,31 +410,40 @@ class Photo extends Component {
   }
 
   renderSelectPic() {
+    console.log(this.state.avatarSource);
     return (
       <View style={styles.container}>
-        <Button
-          bordered
-          onPress={this.selectPhotoTapped.bind(this)}
-          style={styles.addButtonStyle}
-        >
-        {
-          this.state.avatarSource === null ? I18n.t('form.addApic') : I18n.t('form.changePic')
-        }
-        </Button>
+        <View>
+          {
+            this.state.avatarSource === null ? 
+              <TouchableOpacity 
+                  onPress={this.selectPhotoTapped.bind(this)}
+                  style={{ backgroundColor: Theme.mainBackgroundColor, borderRadius: 50, width: 100, height: 100, borderWidth: 1, borderColor: Theme.tabBarBGColor, justifyContent: 'center', alignItems: 'center' }} 
+              >
+                  <Icon name='md-camera' style={{color: Theme.tabBarBGColor, fontSize: 38 }} />
+              </TouchableOpacity> :
+              <View />
+          }
+           
+        </View>
         <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
           <View style={[styles.avatarContainer, {marginBottom: 20}]}>
           { this.state.avatarSource === null ? <View /> :
-            <Image style={styles.avatar} source={this.state.avatarSource} />
+            <Image resizeMode="cover" style={styles.avatar} source={this.state.avatarSource} />
           }
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this.deleteThePhoto.bind(this)}>
-          <View >
           { this.state.avatarSource === null ? <View /> :
-            <Text style={{ color: '#d9534f' }}>{I18n.t('form.deletePic')}</Text>
+            <View style={{ flex: 1, flexDirection: 'row' }} >
+              <View>
+                <Text style={{ color: Theme.tabBarBGColor }} onPress={this.selectPhotoTapped.bind(this)} >{I18n.t('form.changePic')}</Text>                            
+              </View>
+              <View>
+                <Text style={{ color: Theme.tabBarBGColor }} onPress={this.deleteThePhoto.bind(this)}>{I18n.t('form.deletePic')}</Text>              
+              </View>
+            </View>
+            
           }
-          </View>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -444,7 +459,7 @@ class Photo extends Component {
                 block
                 success={this.state.validForm}
                 textStyle={{ color: '#fff', fontSize: 18, fontWeight: '400' }}
-                style={[styles.callBtnSyle, {marginBottom: 20}]}
+                style={[styles.callBtnSyle, {marginBottom: 30}]}
                 onPress={this.onSendEmail.bind(this)}
             > {I18n.t('form.sendEmailButton')} </Button>
           </View>
@@ -488,7 +503,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 300,
     height: 300,
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
   addButtonStyle: {
     marginBottom: 10,

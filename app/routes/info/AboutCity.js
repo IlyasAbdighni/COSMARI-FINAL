@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, PixelRatio, Dimensions, Image } from 'react-native';
-import {
-  Container, Content, CardItem,
-  Text, Thumbnail
-} from 'native-base';
+import { View, StyleSheet, PixelRatio, Dimensions } from 'react-native';
+import { Container, Content, CardItem, Thumbnail, Spinner, Text } from 'native-base';
 import { connect } from 'react-redux';
 
-import { MyParsedText, Card, Spinner } from '../../components';
+import { MyParsedText, Card } from '../../components';
 import I18n from '../../config/lang/i18';
 
 const {height, width} = Dimensions.get('window');
@@ -38,12 +35,12 @@ class AboutCity extends Component {
      const community = this.props.city;
      return (
        <Card style={{ flex: 0 }}>
-           <CardItem>
+           <CardItem style={{ justifyContent: 'center', alignItems: 'center' }} >
                <Thumbnail
                  size={50}
                  source={{ uri: absolutePath + community.ImagePath }}
                />
-               <Text>{community.Nome}</Text>
+               <Text style={{ paddingLeft: 5 }} >{community.Nome}</Text>
            </CardItem>
 
            <CardItem cardBody>
@@ -73,7 +70,7 @@ class AboutCity extends Component {
    } else {
      return (
        <Card>
-         <CardItem>
+         <CardItem style={{ justifyContent: 'center', alignItems: 'center' }} >
            <Spinner color='green' size='large' />
          </CardItem>
        </Card>

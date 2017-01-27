@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Alert, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { Button, InputGroup, Input, Icon } from 'native-base';
 import I18n from '../config/lang/i18';
+import { Theme } from '../styles';
 
 import {
   nameChanged,
@@ -18,22 +19,22 @@ class FormGroup extends Component {
   state = {
     position: null,
     name: {
-      icon: (<Icon name='md-person' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-person' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     email: {
-      icon: (<Icon name='md-at' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-at' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     phone: {
-      icon: (<Icon name='md-phone-portrait' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-phone-portrait' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },
     address: {
-      icon: (<Icon name='md-pin' style={{color: '#384850'}} />),
+      icon: (<Icon name='md-pin' style={{color: Theme.tabBarBGColor}} />),
       message: '',
       valid: false
     },

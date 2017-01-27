@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
+import { Spinner } from 'native-base';
 
-import { Spinner } from '../../components';
 import { getChoosenCommunity, realm } from '../../config';
 import NewsList from './NewsList';
 
@@ -42,7 +42,9 @@ class News extends Component {
   }
 
   _loadData() {
-    axios.get('https://cosmari.e-lios.eu/API/News/List?id=' + this.props.city.id)
+    const api = axios.create();
+    api.defaults.timeout = 2500;
+    api.get('https://cosmari.e-lios.eu/API/News/List?id=' + this.props.city.id)
          .then(res => this.setState({ news: res.data, loading: false }))
          .catch(error => this.setState({ error: true, loading: true, message: error }));
   }
@@ -52,14 +54,14 @@ class News extends Component {
       return <NewsList news={this.state.news} />;
     }
     return (
-      <View style={{ marginTop: 50 }}>
+      <View style={{ marginTop: 50, alignItems: 'center' }}>
         <Spinner color='green' size='large' />
       </View>
     );
   }
 
   render() {
-    console.log(this.props);
+    console.log(this.state);
     return (
       <View style={{ flex: 1 }}>
         {this.renderListView()}
