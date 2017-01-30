@@ -75,7 +75,7 @@ class List extends Component {
             this.state.overlay ? 
             <View style={styles.overlay} >
                 <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }} >
-                    <Spinner color='blue' size='large' />
+                    <Spinner color='#4CAF50' size='large' />
                 </View>
             </View> :
             <View />

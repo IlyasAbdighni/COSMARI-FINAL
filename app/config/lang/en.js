@@ -84,12 +84,15 @@ const en = {
   sceneTitle: {
     myCityList: 'My city list',
     cityList: 'City list',
-    selectACity: 'Select a city'
+    selectACity: 'Select a city',
+    news: 'News',
+    voc: 'Vocabulary'
   },
-  blankPageText: 'You have not selected a city yet. Please select a city to start',
+  blankPageText: 'You have not selected a city yet. Please select one to start',
   months: ['Jan', 'Feb', 'March', 'April', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   selectANewCity: 'Add a new city',
   connectionError: 'There is no internet. Please check your network connection!',
+  serverError: 'Could not connect to the server, please try again...',
   warning: {
     yes: 'Yes',
     cancel: 'Cancel',

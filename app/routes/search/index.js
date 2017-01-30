@@ -2,10 +2,9 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { View, InteractionManager } from 'react-native';
 import { connect } from 'react-redux';
-import { DoubleCircleLoader } from 'react-native-indicator';
+import { Spinner } from 'native-base';
 
 import List from './List';
-import {Spinner} from '../../components';
 
 class Search extends Component {
   constructor() {
@@ -44,8 +43,8 @@ class Search extends Component {
   renderListView() {
     if (this.state.loading) {
        return (
-          <View style={{ marginTop: 50 }}>
-            <Spinner color='green' size='large' />
+          <View style={{ marginTop: 50, alignItems: 'center' }}>
+            <Spinner color='#4CAF50' size='large' />
           </View>
         );
     }
