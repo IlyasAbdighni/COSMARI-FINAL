@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Spinner } from 'native-base';
+import HTMLView from 'react-native-htmlview';
 
 import { realm } from '../../config';
 import { getCommunity } from '../../actions/AppActions';
@@ -152,7 +153,7 @@ class DynamicList extends Component {
                     this.state.overlay ? 
                     <View style={styles.overlay} >
                         <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }} >
-                            <Spinner color='blue' size='large' />
+                            <Spinner color='#4CAF50' size='large' />
                         </View>
                     </View> :
                     <View />
@@ -181,7 +182,11 @@ class DynamicList extends Component {
                           this.props.getCommunity(rowData.id, null);
                       }}
                     >
-                        <Text style={[styles.name]}>{rowData.name}</Text>
+                        <Text style={[styles.name]}>
+                            <HTMLView
+                                value={rowData.name} 
+                            />
+                       </Text>
                         {
                           rowData.selected ? <Icon name='md-checkmark' size={20} style={{color: '#5cb85c'}} />
                           : <View />

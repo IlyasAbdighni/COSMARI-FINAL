@@ -83,13 +83,16 @@ const it = {
   tomorrow: 'DOMANI',
   sceneTitle: {
     myCityList: 'Il mio elenco dei Comuni',
-    cityList: 'City list',
-    selectACity: 'Elenco dei Comuni'
+    cityList: 'la lista La città',
+    selectACity: 'Elenco dei Comuni',
+    news: 'Notizia',
+    voc: 'Vocabolario'
   },
   blankPageText: 'Non hai ancora indicato alcun Comune. Per iniziare, seleziona il tuo Comune.',
   months: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'],
   selectANewCity: 'Scegli un altro Comune',
   connectionError: 'Internet assente, controlla la tua connessione!',
+  serverError: 'Impossibile connettersi ad server, prova di nuovo...',
   warning: {
     yes: 'Si',
     cancel: 'Cancella',

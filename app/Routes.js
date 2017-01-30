@@ -13,9 +13,9 @@ import { Provider, connect } from 'react-redux';
 import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HTMLView from 'react-native-htmlview';
 
 import { Store, getChoosenCommunity, realm } from './config';
-import { NEWS_OPENING_DONE, NEWS_OPENING } from './actions/types';
 import Info from './routes/info';
 import News from './routes/news';
 import Collect from './routes/collect';
@@ -123,7 +123,9 @@ class Routes extends Component {
           {
             Object.keys(city).length > 0 ?
             <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500' }} ellipsizeMode='tail' numberOfLines={1} >
-              {city.name}
+              <HTMLView
+                value={city.name}
+              />
             </Text> :
             <Text style={{ color: '#fff', fontSize: 18, fontWeight: '500' }}ellipsizeMode='tail' numberOfLines={1} > {I18n.t('header.buttonText')}</Text>
           }
@@ -211,6 +213,7 @@ class Routes extends Component {
                 leftButtonIconStyle={{ tintColor: '#fff' }}
                 renderRightButton={null}
                 title={I18n.t('sceneTitle.myCityList')}
+                titleStyle={{ color: '#fff' }}
                 sceneStyle={[styles.sceneStyle, {paddingBottom: 0}]}
                 renderRightButton={null}
               />
@@ -220,12 +223,14 @@ class Routes extends Component {
                 component={AllCity}
                 leftButtonIconStyle={{ tintColor: '#fff' }}
                 title={I18n.t('sceneTitle.cityList')}
+                titleStyle={{ color: '#fff' }}
                 sceneStyle={[styles.sceneStyle, {paddingBottom: 0}]}
                 renderRightButton={null}
               />
               <Scene
                   key='newsDetail'
-                  title='News'
+                  title={I18n.t('sceneTitle.news')}
+                  titleStyle={{ color: '#fff' }}
                   hideNavBar={false}
                   leftButtonIconStyle={{ tintColor: '#fff' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
@@ -234,7 +239,8 @@ class Routes extends Component {
               />
               <Scene
                   key='search'
-                  title='bags'
+                  title={I18n.t('sceneTitle.voc')}
+                  titleStyle={{ color: '#fff' }}
                   hideNavBar={false}
                   leftButtonIconStyle={{ tintColor: '#fff' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}

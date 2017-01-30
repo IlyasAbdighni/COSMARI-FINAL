@@ -30,7 +30,8 @@ class Info extends Component {
       { key: '1', icon: 'update' },
       { key: '2', icon: 'view-list'},
     ],
-    city: this.props.city && null
+    city: this.props.city && null,
+    error: this.props.error
   };
 
   componentWillReceiveProps(nextProps) {

@@ -3,13 +3,11 @@ import { View, Text, Dimensions, StyleSheet, Image, ScrollView, TouchableOpacity
 import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
-import ResponsiveImage from 'react-native-responsive-image';
-import FitImage from 'react-native-fit-image';
 import { Spinner } from 'native-base';
 
-import { Card, CardSection } from '../../components';
+import { Card, CardSection, Error } from '../../components';
 import I18n from '../../config/lang/i18';
-import { Theme, Style } from '../../styles';
+import { Theme } from '../../styles';
 
 const { width } = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
@@ -159,6 +157,8 @@ class DateLoc extends Component {
   }
 
   render() {
+    console.log(this.state);
+    console.log(this.props);
     const {
       scrollViewContainer,
       textTitleContaner,
@@ -181,6 +181,7 @@ class DateLoc extends Component {
             {this.renderMapView()}
           </CardSection>
         </Card>
+        
       </View>
 
     );
@@ -241,7 +242,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     city: state.city.city,
-    loading: state.city.loading
+    loading: state.city.loading,
+    error: state.city.error
    };
 };
 

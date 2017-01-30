@@ -37,7 +37,7 @@ class MyParsedText extends Component {
             ]
           }
         >
-          {this.props.text}
+          {this.props.children}
         </ParsedText>
     );
   }

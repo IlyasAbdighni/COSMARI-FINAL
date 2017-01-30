@@ -18,9 +18,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'app_opening_done':
-      return { ...state, city: action.payload, loading: false };
+      return { ...state, city: action.payload, loading: false, error: null };
     case NEWS_OPENING_DONE:
-      return { ...state, news: action.payload, loading: false };
+      return { ...state, news: action.payload, loading: false, error: null };
     case NEWS_OPENING:
       return { ...state, loading: true };
     case COMMUNITY_LIST_OPENING:

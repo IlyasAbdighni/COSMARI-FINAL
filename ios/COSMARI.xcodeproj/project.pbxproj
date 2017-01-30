@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -25,6 +26,7 @@
 		18E1B2E01C5C41F4B61A60C0 /* Skia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32342886B66C4502AA4A878C /* Skia.ttf */; };
 		281D2FA11E37999800139A39 /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281D2F861E3798DE00139A39 /* libART.a */; };
 		286032301E38A06F00AAE785 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2860321D1E38A04900AAE785 /* libRCTPushNotification.a */; };
+		28CBD0571E3F43B10098C07F /* cosmariLogoNew.png in Resources */ = {isa = PBXBuildFile; fileRef = 28CBD0561E3F43B10098C07F /* cosmariLogoNew.png */; };
 		28E051FD1E2B891B007F64A2 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28E051E71E2B88D3007F64A2 /* libRCTAnimation.a */; };
 		3A41A26E8ECC4AA3941109FB /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F16929029CC14D4D89DF0386 /* Roboto_medium.ttf */; };
 		3F761F96D359451898997AEE /* Andale Mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A103E732F410CBFCD43D2 /* Andale Mono.ttf */; };
@@ -301,6 +303,7 @@
 		23B0D56D1D424FC489C6A50F /* Comic Sans MS.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Comic Sans MS.ttf"; path = "../node_modules/native-base/Fonts/Comic Sans MS.ttf"; sourceTree = "<group>"; };
 		281D2F801E3798DD00139A39 /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		2860320B1E38A04800AAE785 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		28CBD0561E3F43B10098C07F /* cosmariLogoNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cosmariLogoNew.png; sourceTree = "<group>"; };
 		28E051DF1E2B88D2007F64A2 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		2A5A103E732F410CBFCD43D2 /* Andale Mono.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Andale Mono.ttf"; path = "../node_modules/native-base/Fonts/Andale Mono.ttf"; sourceTree = "<group>"; };
 		32342886B66C4502AA4A878C /* Skia.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Skia.ttf; path = "../node_modules/native-base/Fonts/Skia.ttf"; sourceTree = "<group>"; };
@@ -459,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				28CBD0561E3F43B10098C07F /* cosmariLogoNew.png */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1044,6 +1048,7 @@
 				9573E0591BA34084A3FAB63F /* EvilIcons.ttf in Resources */,
 				A60838495A0F4EB9B0372EE7 /* FontAwesome.ttf in Resources */,
 				A97A4E6F493D4A38BEB5FD43 /* Foundation.ttf in Resources */,
+				28CBD0571E3F43B10098C07F /* cosmariLogoNew.png in Resources */,
 				B8BBB755F0EA4D41A6BB396B /* Ionicons.ttf in Resources */,
 				ECE3570D04FB4AC3B924F1AB /* MaterialIcons.ttf in Resources */,
 				F05310236F934606B3CD106F /* Octicons.ttf in Resources */,

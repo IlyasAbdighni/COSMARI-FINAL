@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, PixelRatio, Dimensions } from 'react-native';
+import { View, StyleSheet, PixelRatio } from 'react-native';
 import { Container, Content, CardItem, Thumbnail, Spinner, Text } from 'native-base';
 import { connect } from 'react-redux';
+import HTMLView from 'react-native-htmlview';
 
-import { MyParsedText, Card } from '../../components';
+import { MyParsedText, Card, Error } from '../../components';
 import I18n from '../../config/lang/i18';
-
-const {height, width} = Dimensions.get('window');
 
 const absolutePath = 'https://cosmari.e-lios.eu';
 
@@ -14,14 +13,15 @@ const InfoView = (title, val) => {
   const {
     rowContaner,
   } = styles;
-  const parsedHtml = val.replace(/(<([^>]+)>)/ig, "");
+  let parsedHtml = val.replace(/(<([^>]+)>)/ig, "");
+  parsedHtml = parsedHtml.replace('&#039;', "'");
   return (
     <View style={rowContaner}>
         <Text
           style={{ fontSize: 12, fontWeight: 'bold', color: '#5c5c5c', flex: 1 }}
         >{title}: </Text>
-        <Text style={{ flex: 2, textAlign: 'left' }} numberOfLines={15}>
-          <MyParsedText text={parsedHtml} />
+        <Text style={{ flex: 2, textAlign: 'center' }} numberOfLines={15}>
+          <MyParsedText>{parsedHtml}</MyParsedText>
         </Text>
     </View>
   );
@@ -30,7 +30,6 @@ const InfoView = (title, val) => {
 class AboutCity extends Component {
 
   renderText() {
-
    if (!this.props.loading) {
      const community = this.props.city;
      return (
@@ -40,7 +39,9 @@ class AboutCity extends Component {
                  size={50}
                  source={{ uri: absolutePath + community.ImagePath }}
                />
-               <Text style={{ paddingLeft: 5 }} >{community.Nome}</Text>
+               <Text style={{ paddingLeft: 5 }}>
+                  <HTMLView value={community.Nome} />
+               </Text>
            </CardItem>
 
            <CardItem cardBody>
@@ -79,6 +80,8 @@ class AboutCity extends Component {
  }
 
   render() {
+    console.log(this.props.error === null);
+    
     const {
       container,
     } = styles;
@@ -87,6 +90,9 @@ class AboutCity extends Component {
         <Content>
           {this.renderText()}
         </Content>
+        
+      }
+        
       </Container>
     );
   }
@@ -112,7 +118,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     city: state.city.city.Comune,
-    loading: state.city.loading
+    loading: state.city.loading,
+    error: state.city.error
    };
 };
 
