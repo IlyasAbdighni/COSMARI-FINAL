@@ -4,8 +4,10 @@ import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 import * as Animatable from 'react-native-animatable';
 import { Spinner } from 'native-base';
+import HTMLView from 'react-native-htmlview';
 
 import { Card, CardSection, Error } from '../../components';
+import { realm } from '../../config';
 import I18n from '../../config/lang/i18';
 import { Theme } from '../../styles';
 
@@ -16,7 +18,21 @@ class DateLoc extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { error: null };
     this.goToNativeMapApp = this.goToNativeMapApp.bind(this);
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () => { 
+        if (this.props.error !== null) {
+          this.setState({
+            error: true
+          });
+        }
+       },
+      15000
+    );
   }
 
   renderDate(d) {
@@ -100,10 +116,18 @@ class DateLoc extends Component {
         onPress={this.goToNativeMapApp}
       >
         <View>
-          <Text style={styles.mapCalloutTitle}>{title}</Text>
+          <Text style={styles.mapCalloutTitle}>
+            <HTMLView
+              value={title}
+            />
+          </Text>
         </View>
         <View>
-          <Text style={{ fontSize: 12 }}>{description}</Text>
+          <Text style={{ fontSize: 12 }}>
+            <HTMLView
+              value={description}
+            />
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -124,17 +148,16 @@ class DateLoc extends Component {
           }}
         >
           
-          {cityArea.map(marker => (
+          {cityArea.map((marker, i) => (
             <MapView.Marker
               coordinate={{
                 latitude: marker.Latitudine,
                 longitude: marker.Longitudine
-                // latitude: 37.78825,
-                // longitude: -122.4324,
               }}
               title={marker.IndirizzoCentroDiRaccolta}
               description={marker.Orario}
               onCalloutPress={this.goToNativeMapApp}
+              key={i}
             >
               <MapView.Callout
                 style={{ width: width * 0.6 }}
@@ -157,17 +180,17 @@ class DateLoc extends Component {
   }
 
   render() {
-    console.log(this.state);
-    console.log(this.props);
     const {
       scrollViewContainer,
       textTitleContaner,
       scrollViewContent,
       textTitle
     } = styles;
-
     return (
       <View style={{ flex: 1, paddingBottom: Theme.scenePaddingBottom }}>
+      {
+        this.state.error ? 
+        <Error>{I18n.t('serverError')}</Error> :
         <Card style={{ flex: 1 }}>
           <CardSection style={[scrollViewContainer, {flex: 1}]}>
             <View style={textTitleContaner}>
@@ -181,7 +204,7 @@ class DateLoc extends Component {
             {this.renderMapView()}
           </CardSection>
         </Card>
-        
+      } 
       </View>
 
     );

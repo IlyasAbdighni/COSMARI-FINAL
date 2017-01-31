@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Spinner } from 'native-base';
 
 import { getCommunity } from '../../actions/AppActions';
-import { Text } from '../../components';
+import { Text, Error } from '../../components';
+import { I18n } from '../../config/lang/i18';
 
 const { width, height } = Dimensions.get('window');
 const absolutePath = 'https://cosmari.e-lios.eu';
@@ -75,7 +76,11 @@ class List extends Component {
             this.state.overlay ? 
             <View style={styles.overlay} >
                 <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }} >
-                    <Spinner color='#4CAF50' size='large' />
+                {
+                    this.state.error === null ? 
+                    <Spinner color='#4CAF50' size='large' /> :
+                    <Error style={{ color: 'red' }} >{I18n.t('serverError')}</Error>
+                }
                 </View>
             </View> :
             <View />

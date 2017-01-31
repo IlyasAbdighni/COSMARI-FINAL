@@ -54,38 +54,38 @@ export const getCommunity = (id, name) => {
     const realmList = realm.objects('myLocalCommunities');
     const alreadyInTheList = realmList.filtered(`id = ${id}`);
 
-    if (name !== null) {
-      realm.write(() => {
-        realmList.forEach((item) => {
-          if (item.id !== id) {
-            item.selected = false;
-          } else {
-            item.selected = true;
-          }
-        });
-        if (alreadyInTheList.length === 0) {
-          realm.create('myLocalCommunities', {name, id, selected: true});
-        }
-      });
-    } else {
-      realm.write(() => {
-        if (realmList.length) {
-          realmList.forEach((item) => {
-            item.selected = false;
-            if (id === item.id) {
-              item.selected = true;
-            }
-          });
-        }
-      });
-    }
     return dispatch => {
       axios.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + id)
            .then(res => {
                 dispatch({ type: 'app_opening_done', payload: res.data });
+                if (name !== null) {
+                  realm.write(() => {
+                    realmList.forEach((item) => {
+                      if (item.id !== id) {
+                        item.selected = false;
+                      } else {
+                        item.selected = true;
+                      }
+                    });
+                    if (alreadyInTheList.length === 0) {
+                      realm.create('myLocalCommunities', {name, id, selected: true});
+                    }
+                  });
+                } else {
+                  realm.write(() => {
+                    if (realmList.length) {
+                      realmList.forEach((item) => {
+                        item.selected = false;
+                        if (id === item.id) {
+                          item.selected = true;
+                        }
+                      });
+                    }
+                  });
+                }
                 Actions.main({ type: ActionConst.RESET, id });
             })
-           .catch(error => console.log(error));
+           .catch(error => this.store.dispatch({ type: 'error', payload: error }));
     };
 };
 

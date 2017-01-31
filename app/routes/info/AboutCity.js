@@ -29,6 +29,26 @@ const InfoView = (title, val) => {
 
 class AboutCity extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null  
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () => { 
+        if (this.props.error !== null) {
+          this.setState({
+            error: true
+          });
+        }
+       },
+      15000
+    );
+  }
+
   renderText() {
    if (!this.props.loading) {
      const community = this.props.city;
@@ -80,19 +100,21 @@ class AboutCity extends Component {
  }
 
   render() {
-    console.log(this.props.error === null);
-    
     const {
       container,
     } = styles;
+
     return (
       <Container style={container}>
+      {
+        this.state.error !== null ?
+        <View style={{ flex: 1 }} >
+          <Error>{I18n.t('serverError')}</Error>
+        </View> :
         <Content>
           {this.renderText()}
         </Content>
-        
-      }
-        
+      }  
       </Container>
     );
   }

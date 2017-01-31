@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 const Error = (props) => {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-            <Text>{props.children}</Text>
+            <Text {...props} >{props.children}</Text>
         </View>
     );
 };

@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "node node_modules/react-native/local-cli/cli.js bundle --entry-file='index.ios.js' --bundle-output='./ios/ShootstaCue/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'",
-    "android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",    
-    "test": "jest"
+    "ios-js": "react-native bundle --entry-file='index.ios.js' --bundle-output='./ios/COSMARI/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'",
+    "test": "jest",
+    "android-js": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "android-sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android/app/cosmari-release-key.keystore android/app/build/outputs/apk/app-release-unsigned.apk cosmari-alias ",
+    "android-compress-optimize": "rm android/app/build/outputs/apk/cosmari.apk && ~/Library/Android/sdk/build-tools/23.0.2/zipalign -v 4 android/app/build/outputs/apk/app-release-unsigned.apk android/app/build/outputs/apk/cosmari.apk",
+    "install-android": "adb install -r android/app/build/outputs/apk/cosmari.apk"
   },
   "dependencies": {
     "axios": "^0.15.3",

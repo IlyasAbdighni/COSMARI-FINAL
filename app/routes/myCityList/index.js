@@ -12,7 +12,7 @@ import HTMLView from 'react-native-htmlview';
 
 import { realm } from '../../config';
 import { getCommunity } from '../../actions/AppActions';
-// import { Spinner } from '../../components';
+import { Error } from '../../components';
 import I18n from '../../config/lang/i18';
 
 const data = realm.objects('myLocalCommunities');
@@ -82,12 +82,13 @@ class DynamicList extends Component {
         }),
         refreshing  : false,
         rowToDelete : null,
-        overlay: false
+        overlay: false,
+        error: null
     };
 
     componentDidMount() {
         InteractionManager.runAfterInteractions(() => {
-            this._loadData()
+            this._loadData();
         });
     }
 
@@ -153,7 +154,12 @@ class DynamicList extends Component {
                     this.state.overlay ? 
                     <View style={styles.overlay} >
                         <View style={{ flex: 1, paddingTop: 50, alignItems: 'center' }} >
-                            <Spinner color='#4CAF50' size='large' />
+                            {
+                                this.state.error === null ? 
+                                <Spinner color='#4CAF50' size='large' /> :
+                                <Error style={{ color: 'red' }} >{I18n.t('serverError')}</Error>
+                            }
+                            
                         </View>
                     </View> :
                     <View />
