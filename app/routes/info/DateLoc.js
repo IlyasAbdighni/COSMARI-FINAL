@@ -147,11 +147,6 @@ class DateLoc extends Component {
               longitudeDelta: 0.003,
             }}
           >
-          <MapView.Callout>
-            <View>
-              <Text>jfdksalj jf;d sajkl ;</Text>
-            </View>
-          </MapView.Callout>
             {cityArea.map((marker, i) => (
               <MapView.Marker
                 coordinate={{
