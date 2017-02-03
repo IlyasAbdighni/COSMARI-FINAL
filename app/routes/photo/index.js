@@ -387,7 +387,7 @@ class Photo extends Component {
                 hasImage: true
               });
             },
-            (error) => alert('Could not get the user location!'),
+            (error) => console.log('Could not get the user location!', error),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
           );
         } finally {

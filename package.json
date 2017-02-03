@@ -6,9 +6,11 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "ios-js": "react-native bundle --entry-file='index.ios.js' --bundle-output='./ios/COSMARI/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'",
     "test": "jest",
+    "delete-signed": "rm android/app/build/outputs/apk/cosmari.apk android/app/build/outputs/apk/app-release-unsigned.apk",
     "android-js": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
+    "android-generage-release": "cd android && ./gradlew assembleRelease",
     "android-sign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android/app/cosmari-release-key.keystore android/app/build/outputs/apk/app-release-unsigned.apk cosmari-alias ",
-    "android-compress-optimize": "rm android/app/build/outputs/apk/cosmari.apk && ~/Library/Android/sdk/build-tools/23.0.2/zipalign -v 4 android/app/build/outputs/apk/app-release-unsigned.apk android/app/build/outputs/apk/cosmari.apk",
+    "android-compress-optimize": "~/Library/Android/sdk/build-tools/23.0.2/zipalign -v 4 android/app/build/outputs/apk/app-release-unsigned.apk android/app/build/outputs/apk/cosmari.apk",
     "install-android": "adb install -r android/app/build/outputs/apk/cosmari.apk"
   },
   "dependencies": {
