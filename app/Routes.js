@@ -25,6 +25,7 @@ import AllCity from './routes/cityList';
 import NewsDetail from './routes/news/NewsDetail';
 import Search from './routes/search';
 import {Theme} from './styles';
+import { NoCity } from './components';
 import I18n from './config/lang/i18.js';
 
 console.disableYellowBox = true;
@@ -42,14 +43,15 @@ class Routes extends Component {
     this.state = {
       isConnected: true,
       isLoading: true,
-      cities: null
+      cities: null,
+      initial: true
     };
   }
 
   componentWillMount() {
     city = getChoosenCommunity();
-    if (Object.keys(city).length) {
-      this.initial = false;
+    if (Object.keys(city).length > 0) {
+      this.setState({ initial: false });
       const api = axios.create();
       api.defaults.timeout = 2500;
       api.get('https://cosmari.e-lios.eu/API/Comuni/Detail?id=' + city.id)
@@ -58,7 +60,7 @@ class Routes extends Component {
           )
           .catch(error => this.store.dispatch({ type: 'error', payload: error }));
     } else {
-      this.initial = true;
+      this.setState({ initial: true });
     }   
   }
 
@@ -75,27 +77,29 @@ class Routes extends Component {
 
   goToSearchPage() {
     Actions.search();
-    
   }
 
-  renderIcons({ selected, title }) {
+  renderIcons(props) {
+    console.log(props);
     const icons = {
-      info: <Ionicons style={{ justifyContent: 'center', textAlign: 'center' }} name="md-information-circle" size={24} color={selected ? '#fff' : '#E0E0E0'} />,
-      news: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="newspaper-o" size={24} color={selected ? '#fff' : '#E0E0E0'} />,
-      collect: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="truck" size={24} color={selected ? '#fff' : '#E0E0E0'} />,
-      report: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="camera" size={24} color={selected ? '#fff' : '#E0E0E0'} />,
+      info: <Ionicons style={{ justifyContent: 'center', textAlign: 'center' }} name="md-information-circle" size={24} color={props.selected ? '#fff' : '#E0E0E0'} />,
+      news: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="newspaper-o" size={24} color={props.selected ? '#fff' : '#E0E0E0'} />,
+      collect: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="truck" size={24} color={props.selected ? '#fff' : '#E0E0E0'} />,
+      report: <FontAwesomeIcon style={{ justifyContent: 'center', textAlign: 'center' }} name="camera" size={24} color={props.selected ? '#fff' : '#E0E0E0'} />,
     };
 
     let icon = icons.info;
 
-    switch (title) {
+    switch (props.title) {
       case 'News':
         icon = icons.news;
         break;
       case 'Collect':
+      case 'Ritiro':
         icon = icons.collect;
         break;
-      case 'Photo':
+      case 'Report':
+      case 'Segnala':
         icon = icons.report;
         break;
       default:
@@ -105,7 +109,7 @@ class Routes extends Component {
       <View>
         {icon}
         {
-          selected ? <Text style={{color: selected ? '#fff' : '#E0E0E0'}}>{title}</Text> : <View />
+          props.selected ? <Text style={{color: props.selected ? '#fff' : '#E0E0E0'}}>{props.title}</Text> : <View />
         }
 
       </View>
@@ -113,7 +117,17 @@ class Routes extends Component {
   }
 
   newsTab() {
-    Actions.NewsMain({ type: ActionConst.REFRESH, city: city});
+    Actions.NewsMain({ type: ActionConst.REFRESH, city});
+  }
+
+  _renderError() {
+    return (
+      <Error>
+          <TouchableOpacity>
+            <Text>{I18n.t('header.buttonText')}</Text>
+          </TouchableOpacity>
+      </Error>
+    );
   }
 
   render() {
@@ -160,7 +174,7 @@ class Routes extends Component {
                   type={ActionConst.REPLACE}
                 >
                   {/* Tab and it's scenes */}
-                  <Scene key="Info" title="Info" icon={this.renderIcons} >
+                  <Scene key="Info" title={I18n.t('tabs.info')} icon={this.renderIcons} >
                     <Scene
                       key="InfoMain"
                       component={Info}
@@ -173,7 +187,7 @@ class Routes extends Component {
                   {/* Tab and it's scenes */}
                   <Scene
                     key="News"
-                    title="News"
+                    title={I18n.t('tabs.news')}
                     icon={this.renderIcons}
                     onPress={() => this.newsTab()}
                   >
@@ -186,7 +200,7 @@ class Routes extends Component {
                   </Scene>
 
                   {/* Tab and it's scenes */}
-                  <Scene key="Collect" title="Collect" icon={this.renderIcons}>
+                  <Scene key="Collect" title={I18n.t('tabs.collect')} icon={this.renderIcons}>
                     <Scene
                       key="CollectMain"
                       component={Collect}
@@ -196,7 +210,7 @@ class Routes extends Component {
                   </Scene>
 
                   {/* Tab and it's scenes */}
-                  <Scene key="Photo" title="Photo" icon={this.renderIcons}>
+                  <Scene key="Photo" title={I18n.t('tabs.report')} icon={this.renderIcons}>
                     <Scene
                       key="PhotoMain"
                       component={Photo}
@@ -242,11 +256,22 @@ class Routes extends Component {
                   title={I18n.t('sceneTitle.voc')}
                   titleStyle={{ color: '#fff' }}
                   hideNavBar={false}
-                  leftButtonIconStyle={{ tintColor: '#fff' }}
+                  leftButtonIconStyle={{ tintColor: '#fff', color: 'red' }}
                   navigationBarStyle={{ backgroundColor: '#4CAF50' }}
                   component={Search}
                   sceneStyle={{ paddingTop: Theme.scenePaddingTop }}
                   renderRightButton={null}
+              />
+              <Scene
+                  initial={this.state.initial}
+                  key='error'
+                  title={null}
+                  titleStyle={{ color: '#fff' }}
+                  hideNavBar={false}
+                  leftButtonIconStyle={{ tintColor: '#fff' }}
+                  navigationBarStyle={{ backgroundColor: '#4CAF50' }}
+                  component={NoCity}
+                  sceneStyle={{ paddingTop: Theme.scenePaddingTop }}
               />
 
             </Scene>

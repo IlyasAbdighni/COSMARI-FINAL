@@ -387,7 +387,7 @@ class Photo extends Component {
                 hasImage: true
               });
             },
-            (error) => alert('Could not get the user location!'),
+            (error) => console.log('Could not get the user location!', error),
             {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
           );
         } finally {
@@ -434,7 +434,7 @@ class Photo extends Component {
           </View>
         </TouchableOpacity>
           { this.state.avatarSource === null ? <View /> :
-            <View style={{ flex: 1, flexDirection: 'row' }} >
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }} >
               <View>
                 <Text style={{ color: Theme.tabBarBGColor }} onPress={this.selectPhotoTapped.bind(this)} >{I18n.t('form.changePic')}</Text>                            
               </View>

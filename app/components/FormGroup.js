@@ -50,7 +50,7 @@ class FormGroup extends Component {
           (position) => {
           this.setState({position});
         },
-        (error) => alert(JSON.stringify(error)),
+        (error) => console.log(error),
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
   }

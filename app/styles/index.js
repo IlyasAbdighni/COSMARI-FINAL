@@ -8,6 +8,7 @@ export const Theme = {
   paddingBottom: Platform.OS === 'ios' ? 0 : 50,
   scenePaddingTop: Platform.OS === 'ios' ? 68 : 60,
   scenePaddingBottom: Platform.OS === 'ios' ? 65 : 10,
+  danger: '#d9534f'
 };
 
 // Precalculate Device Dimensions for better performance

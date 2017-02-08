@@ -31,7 +31,7 @@ class DateLoc extends Component {
           });
         }
        },
-      15000
+      30000
     );
   }
 
@@ -138,37 +138,36 @@ class DateLoc extends Component {
       const cityArea = this.props.city.Comune.CentriRaccolta;
 
       return (
-        <MapView
-          style={styles.mapStyle}
-          region={{
-            latitude: cityArea[0].Latitudine,
-            longitude: cityArea[0].Longitudine,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.003,
-          }}
-        >
-          
-          {cityArea.map((marker, i) => (
-            <MapView.Marker
-              coordinate={{
-                latitude: marker.Latitudine,
-                longitude: marker.Longitudine
-              }}
-              title={marker.IndirizzoCentroDiRaccolta}
-              description={marker.Orario}
-              onCalloutPress={this.goToNativeMapApp}
-              key={i}
-            >
-              <MapView.Callout
-                style={{ width: width * 0.6 }}
+          <MapView
+            style={styles.mapStyle}
+            region={{
+              latitude: cityArea[0].Latitudine,
+              longitude: cityArea[0].Longitudine,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.003,
+            }}
+          >
+            {cityArea.map((marker, i) => (
+              <MapView.Marker
+                coordinate={{
+                  latitude: marker.Latitudine,
+                  longitude: marker.Longitudine
+                }}
+                title={marker.IndirizzoCentroDiRaccolta}
+                description={marker.Orario}
+                onCalloutPress={this.goToNativeMapApp}
+                key={i}
               >
-                {this.renderMapCallout(marker.IndirizzoCentroDiRaccolta, marker.Orario)}
-              </MapView.Callout>
-            </MapView.Marker>
+                <MapView.Callout
+                  style={{ width: width * 0.6 }}
+                >
+                  {this.renderMapCallout(marker.IndirizzoCentroDiRaccolta, marker.Orario)}
+                </MapView.Callout>
+              </MapView.Marker>
 
-          ))}
-            
-        </MapView>
+            ))}
+              
+          </MapView>
 
       );
     }
@@ -200,8 +199,11 @@ class DateLoc extends Component {
               {this.renderScrollView()}
             </View>
           </CardSection>
-          <CardSection style={{ flex: 2}} >
+          <CardSection style={{ flex: 2, flexDirection: 'column'}} >
             {this.renderMapView()}
+            <View style={styles.mapLabel}>
+              <Text style={{ backgroundColor: 'rgba(255,255,255,0.7)', paddingHorizontal: 10, borderRadius: 5, fontWeight: '500' }} >Centro di raccolta</Text>
+            </View>
           </CardSection>
         </Card>
       } 
@@ -209,6 +211,14 @@ class DateLoc extends Component {
 
     );
   }
+}
+
+const MyCustomCalloutView = () => {
+  return (
+    <View>
+      <Text>dajf dsal fdklsa </Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -259,6 +269,15 @@ const styles = StyleSheet.create({
   },
   mapCalloutDescription: {
     justifyContent: 'center'
+  },
+  mapLabel: {
+    position: 'absolute',
+    top: 10,
+    width,
+    color: 'black',
+    zIndex: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

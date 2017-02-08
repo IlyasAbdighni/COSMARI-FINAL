@@ -20,7 +20,7 @@ const InfoView = (title, val) => {
         <Text
           style={{ fontSize: 12, fontWeight: 'bold', color: '#5c5c5c', flex: 1 }}
         >{title}: </Text>
-        <Text style={{ flex: 2, textAlign: 'center' }} numberOfLines={15}>
+        <Text style={{ flex: 2, textAlign: 'left' }} numberOfLines={15}>
           <MyParsedText>{parsedHtml}</MyParsedText>
         </Text>
     </View>

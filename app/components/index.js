@@ -5,3 +5,4 @@ export * from './ParsedText';
 export * from './PushNotificationCtr';
 export * from './Text';
 export * from './Error';
+export * from './NoCity';

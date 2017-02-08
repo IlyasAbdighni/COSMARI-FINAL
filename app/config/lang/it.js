@@ -83,7 +83,7 @@ const it = {
   tomorrow: 'DOMANI',
   sceneTitle: {
     myCityList: 'Il mio elenco dei Comuni',
-    cityList: 'la lista La città',
+    cityList: 'Città',
     selectACity: 'Elenco dei Comuni',
     news: 'Notizia',
     voc: 'Vocabolario'
