@@ -434,7 +434,7 @@ class Photo extends Component {
           </View>
         </TouchableOpacity>
           { this.state.avatarSource === null ? <View /> :
-            <View style={{ flex: 1, flexDirection: 'row' }} >
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }} >
               <View>
                 <Text style={{ color: Theme.tabBarBGColor }} onPress={this.selectPhotoTapped.bind(this)} >{I18n.t('form.changePic')}</Text>                            
               </View>
